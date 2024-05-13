@@ -6,21 +6,16 @@ import { hash } from "bcryptjs";
 
 const signupHandler = async (name: string, email: string, password: string) => {
   await connectDatabase();
-
   try {
-    const user = await User.findOne({ email });
-
-    if (user) throw new Error("Email already exists.");
-
     const hashedPassword = await hash(password, 10);
-
     await User.create({
       name,
       email,
       password: hashedPassword,
     });
+    return { success: true };
   } catch (error) {
-    return error;
+    return { success: false, message: "An error occured. Please try again" };
   }
 };
 

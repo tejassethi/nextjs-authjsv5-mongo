@@ -9,9 +9,10 @@ const loginHandler = async (email: string, password: string) => {
       email,
       password,
     });
+    return { success: true };
   } catch (error) {
     const err = error as CredentialsSignin;
-    return err.cause;
+    return { success: false, message: err.cause || "An error occurred" };
   }
 };
 

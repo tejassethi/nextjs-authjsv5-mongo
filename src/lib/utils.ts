@@ -1,15 +1,21 @@
-import mongoose from "mongoose";
+import { type ClassValue, clsx } from "clsx";
+import mongoose, { mongo } from "mongoose";
+import { twMerge } from "tailwind-merge";
+
+export function cn(...inputs: ClassValue[]) {
+  return twMerge(clsx(inputs));
+}
 
 export const connectDatabase = async () => {
   try {
     if (mongoose.connections && mongoose.connections[0].readyState) return;
-    const { connection } = await mongoose.connect(
-      process.env.MONGO_URI as string,
-      { dbName: "pastewords" }
-    );
-    console.log("Connected to database: " + connection.host);
+
+    const { connection } = await mongoose.connect(process.env.MONGO_URI || "", {
+      dbName: "pastewords",
+    });
+
+    console.log("connect to db", connection.host);
   } catch (error) {
-    console.log("Error db");
-    throw new Error("Error connecting to database");
+    throw new Error("Error connecting to db");
   }
 };
