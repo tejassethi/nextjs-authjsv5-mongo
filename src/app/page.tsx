@@ -11,13 +11,13 @@ export default async function Home() {
     redirect("/member");
   } else {
     return (
-      <main className="bg-[#FFF2E1] relative h-full min-h-screen pb-6 md:pb-0">
+      <div className="bg-[#FFF2E1] relative h-full min-h-screen pb-6 md:pb-0">
         <Navbar />
         <div className="flex flex-col md:h-screen md:justify-center place-items-center pt-28 md:pt-0">
           <DropTop />
           <MainCard />
         </div>
-      </main>
+      </div>
     );
   }
 }

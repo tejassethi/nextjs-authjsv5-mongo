@@ -69,7 +69,9 @@ const CreateTab = ({
   };
 
   return (
-    <div className="flex flex-col space-y-4">
+    <div
+      className={`flex flex-col space-y-4 ${loading && "pointer-events-none"}`}
+    >
       <div className="relative">
         <label
           htmlFor="email"

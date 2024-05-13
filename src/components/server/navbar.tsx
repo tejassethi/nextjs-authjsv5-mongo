@@ -17,19 +17,19 @@ const Navbar = async ({ role }: any) => {
         </div>
         <div className="space-x-5 justify-end place-items-center hidden md:flex">
           <Link
-            href="about"
+            href="/about"
             className="cursor-pointer font-semibold text-[#F6F5F2] hover:text-[#37322b] text-lg"
           >
             About
           </Link>
           <Link
-            href="pricing"
+            href="/pricing"
             className="cursor-pointer font-semibold text-[#F6F5F2] hover:text-[#37322b] text-lg"
           >
             Pricing
           </Link>
           <Link
-            href="auth/login"
+            href="/auth/login"
             className="cursor-pointer font-semibold text-[#F6F5F2] hover:text-[#37322b] text-lg"
           >
             Log in

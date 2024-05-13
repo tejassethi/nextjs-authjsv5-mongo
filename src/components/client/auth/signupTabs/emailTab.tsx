@@ -23,10 +23,11 @@ const EmailTab = ({ email, setEmail, setCode, setPage }: any) => {
       setPage("verify");
     } else {
       setEmailError(response.message);
+      setLoading(false);
     }
   };
   return (
-    <div>
+    <div className={`${loading && "pointer-events-none"}`}>
       <div className="relative">
         <label
           htmlFor="email"
