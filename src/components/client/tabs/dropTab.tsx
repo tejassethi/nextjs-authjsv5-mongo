@@ -67,34 +67,31 @@ const DropTab = ({
     }
   };
 
-  const onDrop = useCallback(
-    (acceptedFiles: any, rejectedFiles: any) => {
-      if (rejectedFiles.length > 0) {
-        const errorCode = rejectedFiles[0].errors[0].code;
-        let FileErrorMessage = "";
+  const onDrop = useCallback((acceptedFiles: any, rejectedFiles: any) => {
+    if (rejectedFiles.length > 0) {
+      const errorCode = rejectedFiles[0].errors[0].code;
+      let FileErrorMessage = "";
 
-        switch (errorCode) {
-          case ErrorCode.FileInvalidType:
-            FileErrorMessage =
-              "Invalid file type. Please upload a supported file";
-            break;
-          case ErrorCode.FileTooLarge:
-            FileErrorMessage = `Maximum size allowed is ${maxFileSize} ${maxFileSizeUnit}.`;
-            break;
-          default:
-            FileErrorMessage =
-              "An error occurred while uploading the file. Please try again";
-        }
-
-        setFileErrorMessage(FileErrorMessage);
-        uploadvalidation();
-      } else {
-        setreceivedFile(acceptedFiles[0]);
-        setFileErrorMessage("");
+      switch (errorCode) {
+        case ErrorCode.FileInvalidType:
+          FileErrorMessage =
+            "Invalid file type. Please upload a supported file";
+          break;
+        case ErrorCode.FileTooLarge:
+          FileErrorMessage = `Maximum size allowed is ${maxFileSize} ${maxFileSizeUnit}.`;
+          break;
+        default:
+          FileErrorMessage =
+            "An error occurred while uploading the file. Please try again";
       }
-    },
-    [maxFileSize, maxFileSizeUnit, uploadvalidation]
-  );
+
+      setFileErrorMessage(FileErrorMessage);
+      uploadvalidation();
+    } else {
+      setreceivedFile(acceptedFiles[0]);
+      setFileErrorMessage("");
+    }
+  }, []);
 
   const { getRootProps, getInputProps, isDragActive, open } = useDropzone({
     onDrop,

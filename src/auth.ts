@@ -5,7 +5,7 @@ import {
   authorizeUser,
   createUserWithGoogle,
   getUser,
-} from "./actions/user.actions";
+} from "./lib/actions/user.actions";
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
   providers: [

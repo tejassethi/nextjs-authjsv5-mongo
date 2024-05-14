@@ -1,4 +1,4 @@
-import { auth } from "@/lib/auth";
+import { auth } from "@/auth";
 import DropTop from "@/components/client/header";
 import MainCard from "@/components/client/mainCard";
 import Navbar from "@/components/server/navbar";

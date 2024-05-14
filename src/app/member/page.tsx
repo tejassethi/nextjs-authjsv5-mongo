@@ -1,6 +1,6 @@
 "use server";
 
-import { auth, signOut } from "@/lib/auth";
+import { auth, signOut } from "@/auth";
 import Navbar from "@/components/server/navbar";
 import { redirect } from "next/navigation";
 

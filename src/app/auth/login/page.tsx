@@ -3,7 +3,7 @@
 import Link from "next/link";
 import React from "react";
 import LoginForm from "../../../components/client/auth/loginForm";
-import { auth, signIn } from "@/lib/auth";
+import { auth, signIn } from "@/auth";
 import { redirect } from "next/navigation";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import Navbar from "@/components/server/navbar";

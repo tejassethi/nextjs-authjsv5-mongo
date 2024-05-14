@@ -1,6 +1,6 @@
 "use server";
 
-import { auth, signIn } from "@/lib/auth";
+import { auth, signIn } from "@/auth";
 import EmailForm from "@/components/client/auth/signupForm";
 import SignUpForm from "@/components/client/auth/signupForm";
 import Navbar from "@/components/server/navbar";
