@@ -1,9 +1,9 @@
 "use client";
 
 import React, { useState } from "react";
-import { loginHandler } from "@/actions/login";
-import { redirect } from "next/navigation";
+import { loginHandler } from "@/lib/login";
 import { PropagateLoader } from "react-spinners";
+import { useRouter } from "next/navigation";
 
 const LoginForm = () => {
   const [email, setEmail] = useState<any>("");
@@ -11,6 +11,8 @@ const LoginForm = () => {
   const [emailError, setEmailError] = useState<any>("");
   const [passwordError, setPasswordError] = useState<any>("");
   const [loading, setLoading] = useState(false);
+
+  const router = useRouter();
 
   const handleSubmit = async () => {
     if (email === "") {
@@ -25,13 +27,12 @@ const LoginForm = () => {
     setPasswordError("");
     setLoading(true);
     const response = await loginHandler(email, password);
-
+    console.log("response", response.message);
     if (response.success) {
       console.log("Login successful");
-      redirect("/member");
+      router.push("/member");
     } else {
       setEmailError(response.message);
-      console.log(response.message);
       setLoading(false);
     }
   };
@@ -95,9 +96,6 @@ const LoginForm = () => {
             Continue with Email
           </button>
         )}
-      </div>
-      <div className="text-[#776B5D] font-bold text-sm flex w-full justify-center pt-2">
-        or
       </div>
     </div>
   );

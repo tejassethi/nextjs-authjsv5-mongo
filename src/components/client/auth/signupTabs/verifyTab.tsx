@@ -1,6 +1,6 @@
 "use client";
 
-import { sendEmail } from "@/actions/sendEmail";
+import { sendEmail } from "@/lib/sendEmail";
 import {
   InputOTP,
   InputOTPGroup,
@@ -22,11 +22,10 @@ const VerifyTab = ({
   const [showResendButton, setShowResendButton] = useState(false);
   const [resendText, setResendText] = useState("");
   const [error, setError] = useState("");
+  const [countdown, setCountdown] = useState(30);
 
   const handleCodeCheck = async () => {
     setLoading(true);
-    console.log(code);
-    console.log(inputCode);
     if (parseInt(code) === parseInt(inputCode)) {
       console.log("verification successfull");
       setPage("create");
@@ -39,11 +38,16 @@ const VerifyTab = ({
   };
 
   useEffect(() => {
-    setTimeout(() => {
+    if (countdown > 0) {
+      const timer = setInterval(() => {
+        setCountdown((prevCountdown) => prevCountdown - 1);
+      }, 1000);
+      return () => clearInterval(timer);
+    } else {
       setLoading(false);
       setShowResendButton(true);
-    }, 30000);
-  });
+    }
+  }, [countdown]);
 
   const resendCode = async () => {
     setResendLoading(true);
@@ -99,8 +103,8 @@ const VerifyTab = ({
             >
               Verify
             </button>
-            {showResendButton &&
-              (resendText === "" ? (
+            {showResendButton ? (
+              resendText === "" ? (
                 <button
                   onClick={resendCode}
                   className="w-full select-none h-10 text-[#776B5D] hover:text-[#544c42] text-lg underline flex justify-center place-items-center cursor-pointer"
@@ -111,7 +115,12 @@ const VerifyTab = ({
                 <p className="w-full select-none h-10 text-[#776B5D] text-lg flex justify-center place-items-center cursor-pointer">
                   {resendText}
                 </p>
-              ))}
+              )
+            ) : (
+              <p className="w-full select-none h-10 text-[#776B5D] text-lg flex justify-center place-items-center">
+                Resend in {countdown} seconds
+              </p>
+            )}
           </>
         )}
         {error && (

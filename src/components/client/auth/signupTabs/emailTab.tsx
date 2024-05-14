@@ -1,6 +1,6 @@
 "use client";
 
-import { sendEmail } from "@/actions/sendEmail";
+import { sendEmail } from "@/lib/sendEmail";
 import Link from "next/link";
 import React, { useState } from "react";
 import { PropagateLoader } from "react-spinners";
@@ -65,12 +65,6 @@ const EmailTab = ({ email, setEmail, setCode, setPage }: any) => {
             Continue with Email
           </button>
         )}
-      </div>
-      <div className="text-[#776B5D] select-none text-sm flex w-full justify-end place-items-center pt-2 cursor-pointer">
-        Already have an account?{" "}
-        <Link href="/auth/login" className="underline pl-1">
-          Log in
-        </Link>
       </div>
     </div>
   );

@@ -20,7 +20,6 @@ const userSchema = new Schema({
     required: true,
     default: new mongoose.Types.ObjectId("663e342d4ec2f7f9af2268e2"),
   },
-  verification_code: { type: Number },
   created_at: { type: Date, default: Date.now },
   last_login: { type: Date, default: Date.now },
 });

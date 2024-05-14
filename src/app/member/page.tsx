@@ -1,17 +1,15 @@
 "use server";
 
-import { auth, signOut } from "@/auth";
+import { auth, signOut } from "@/lib/auth";
 import Navbar from "@/components/server/navbar";
 import { redirect } from "next/navigation";
 
 const page = async () => {
   const session: any = await auth();
-  console.log(session);
   if (!session?.user) {
     redirect("/auth/login");
   }
-  console.log(session);
-  return <>{<Navbar role={session?.user?.plan?.name} />}</>;
+  return <>{<Navbar />}</>;
 };
 
 export default page;

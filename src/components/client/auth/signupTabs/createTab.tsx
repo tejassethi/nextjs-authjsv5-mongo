@@ -1,7 +1,7 @@
 "use client";
 
-import { loginHandler } from "@/actions/login";
-import { signupHandler } from "@/actions/signup";
+import { loginHandler } from "@/lib/login";
+import { createUserWithCredentail } from "@/lib/actions/user.actions";
 import { redirect } from "next/navigation";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -55,7 +55,7 @@ const CreateTab = ({
 
     setLoading(true);
 
-    const signupResult = await signupHandler(name, email, password);
+    const signupResult = await createUserWithCredentail(name, email, password);
     if (!signupResult.success) {
       setLoading(false);
       setError(signupResult.message || "An error occured");

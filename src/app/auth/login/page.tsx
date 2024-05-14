@@ -3,7 +3,7 @@
 import Link from "next/link";
 import React from "react";
 import LoginForm from "../../../components/client/auth/loginForm";
-import { auth, signIn } from "@/auth";
+import { auth, signIn } from "@/lib/auth";
 import { redirect } from "next/navigation";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import Navbar from "@/components/server/navbar";
@@ -22,9 +22,7 @@ const page = async () => {
         </h1>
         <Card className="flex justify-stretch place-items-center rounded-lg flex-col w-[80%] pt-6 md:w-[500px]">
           <CardContent className="flex h-full flex-col w-full">
-            <LoginForm />
             <form
-              className="pt-2"
               action={async () => {
                 "use server";
                 await signIn("google");
@@ -96,11 +94,22 @@ const page = async () => {
                 <span>Continue with Google</span>
               </button>
             </form>
-            <div className="text-[#776B5D] select-none text-sm flex w-full justify-end place-items-center pt-2 cursor-pointer">
-              Don't have an account?{" "}
-              <Link href="/auth/signup" className="underline pl-1">
-                Sign up
-              </Link>
+            <div className="text-[#776B5D] font-bold text-lg flex w-full justify-center py-4">
+              or
+            </div>
+            <LoginForm />
+            <div className="text-[#776B5D] select-none text-sm flex flex-col sm:flex-row w-full justify-between place-items-center pt-2 cursor-pointer">
+              <div className="flex justify-center place-items-center">
+                <Link href="/auth/forgot" className="underline pl-1">
+                  Forgot Password?
+                </Link>
+              </div>
+              <div className="flex justify-center place-items-center">
+                {"Don't have an account?"}
+                <Link href="/auth/signup" className="underline pl-1">
+                  Sign up
+                </Link>
+              </div>
             </div>
           </CardContent>
         </Card>

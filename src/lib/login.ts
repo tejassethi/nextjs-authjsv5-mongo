@@ -1,6 +1,6 @@
 "use server";
 
-import { signIn } from "@/auth";
+import { signIn } from "@/lib/auth";
 import { CredentialsSignin } from "next-auth";
 
 const loginHandler = async (email: string, password: string) => {
@@ -8,11 +8,13 @@ const loginHandler = async (email: string, password: string) => {
     await signIn("credentials", {
       email,
       password,
+      redirect: false,
     });
     return { success: true };
   } catch (error) {
     const err = error as CredentialsSignin;
-    return { success: false, message: err.cause || "An error occurred" };
+    console.log("Error:", err.cause);
+    return { success: false, message: err.cause };
   }
 };
 

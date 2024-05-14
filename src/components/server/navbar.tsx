@@ -1,10 +1,11 @@
-import { auth, signOut } from "@/auth";
+import { auth, signOut } from "@/lib/auth";
 import Link from "next/link";
 import React from "react";
 
-const Navbar = async ({ role }: any) => {
+const Navbar = async () => {
   const session = await auth();
-  if (!session?.user?.email) {
+  const plan = session?.user.plan.name;
+  if (!session?.user) {
     return (
       <div className="select-none absolute left-0 top-0 right-0 h-16 p-5 bg-[#A79277] flex justify-between place-items-center space-x-5">
         <div className="justify-start place-items-center flex">
@@ -65,15 +66,9 @@ const Navbar = async ({ role }: any) => {
               Sign out
             </button>
           </form>
-          {role == "Free" ? (
-            <div className="cursor-pointer bg-[#FFF2E1] hover:bg-[#37322b] hover:text-[#FFF2E1] text-[#A79277] p-1 px-3 rounded-sm font-semibold text-center text-lg text-nowrap">
-              Upgrade
-            </div>
-          ) : (
-            <div className="cursor-pointer bg-[#FFF2E1] hover:bg-[#37322b] hover:text-[#FFF2E1] text-[#A79277] p-1 px-3 rounded-sm font-semibold text-center text-lg text-nowrap">
-              My Account
-            </div>
-          )}
+          <div className="cursor-pointer bg-[#FFF2E1] hover:bg-[#37322b] hover:text-[#FFF2E1] text-[#A79277] p-1 px-3 rounded-sm font-semibold text-center text-lg text-nowrap">
+            My {plan ? plan : ""} Account
+          </div>
         </div>
       </div>
     );
