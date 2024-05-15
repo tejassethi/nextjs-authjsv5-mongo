@@ -33,15 +33,14 @@ const sendEmailReset = async (email: string) => {
   try {
     const user = await getUserWithPassword(email);
     if (!user.success) throw new Error("Invalid Email");
-    // const { data, error } = await resend.emails.send({
-    //   from: "Paste Words <admin@pastewords.com>",
-    //   to: [email],
-    //   subject: "Paste Words Verification Code",
-    //   html: `<strong>${code}</strong>`,
-    // });
-    const { data, error } = { data: "lol", error: false };
-    console.log(code);
-
+    const { data, error } = await resend.emails.send({
+      from: "Paste Words <admin@pastewords.com>",
+      to: [email],
+      subject: "Paste Words Verification Code",
+      html: `<strong>${code}</strong>`,
+    });
+    // const { data, error } = { data: "lol", error: false };
+    // console.log(code);
     if (error) throw new Error("Failed to send email. Try again later");
     return {
       success: true,
