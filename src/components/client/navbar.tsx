@@ -1,6 +1,4 @@
-// ClientNavbar.js
-"use client"; // This directive is necessary for Next.js client-side code
-
+"use client";
 import React, { useState } from "react";
 import Link from "next/link";
 import { FaBars } from "react-icons/fa";

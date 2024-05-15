@@ -90,3 +90,39 @@ export async function getUser(email: any) {
     };
   }
 }
+
+export async function getUserWithPassword(email: any) {
+  try {
+    await connectToDatabase();
+
+    const user = await User.findOne({ email: email })
+      .select("+password")
+      .populate("plan");
+
+    if (!user) throw new Error("Invalid credentials");
+
+    console.log("GET USER: ", user);
+
+    return { success: true, data: user.toObject() };
+  } catch (error) {
+    return {
+      success: false,
+      message:
+        (error as Error)?.message || "An error occured. Please try again",
+    };
+  }
+}
+
+export async function resetPassword(email: any, password: any) {
+  try {
+    await connectToDatabase();
+    const hashedPassword = await hash(password, 10);
+    const newUser = await User.findOneAndUpdate(
+      { email: email },
+      { password: hashedPassword }
+    );
+    return { success: true, message: JSON.parse(JSON.stringify(newUser)) };
+  } catch (error) {
+    return { success: false, message: "An error occured. Please try again" };
+  }
+}
