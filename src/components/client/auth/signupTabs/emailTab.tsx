@@ -62,7 +62,7 @@ const EmailTab = ({ email, setEmail, setCode, setPage }: any) => {
       </div>
       <div>
         {loading ? (
-          <div className="w-full h-12 text-lg flex justify-center font-semibold  rounded-lg text-white bg-green hover:bg-green-dark dark:text-black dark:bg-yellow-dark dark:hover:bg-yellow focus:outline-none">
+          <div className="w-full h-12 text-lg flex justify-center place-items-center font-semibold  rounded-lg text-white bg-green hover:bg-green-dark dark:text-black dark:bg-yellow-dark dark:hover:bg-yellow focus:outline-none">
             <PropagateLoader color="white" size={15} className="mb-4" />
           </div>
         ) : (
