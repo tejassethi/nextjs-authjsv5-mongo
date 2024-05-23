@@ -17,7 +17,7 @@ import Navbar from "@/components/client/navbar";
 import Link from "next/link";
 import Heading from "@/components/client/heading";
 
-export default function Home() {
+export default function MyWords() {
   const [accordion, setAccordion] = useState("item-1");
   const [receivedText, setreceivedText] = useState<any>("");
   const [receivedURL, setreceivedURL] = useState<any>("");
@@ -87,10 +87,8 @@ export default function Home() {
   return (
     <>
       <Navbar />
-      <div
-        {...getRootProps()}
-        className="min-h-screen flex justify-center font-OpenSans dark:text-white pb-10 md:pb-0 select-none relative"
-      >
+
+      <div className="min-h-screen flex justify-center font-OpenSans dark:text-white pb-10 md:pb-0 select-none relative">
         <div className="w-full sm:px-10 px-5 xl:px-0">
           <div className="md:pt-24">
             <Heading />
@@ -98,7 +96,7 @@ export default function Home() {
           <div className="flex md:space-x-8 space-x-2 md:pt-14 pt-10 w-full  justify-center place-items-center">
             <Link
               href="/"
-              className="bg-green dark:bg-yellow-dark dark:text-black font-medium w-44 h-10 flex justify-center place-items-center rounded-lg tex-sm md:text-xl text-white cursor-pointer whitespace-nowrap"
+              className="bg-white dark:bg-gray dark:text-white w-44 h-10 flex justify-center place-items-center rounded-lg tex-sm md:text-xl text-black cursor-pointer whitespace-nowrap"
             >
               Paste Words
             </Link>
@@ -110,7 +108,7 @@ export default function Home() {
             </Link>
             <Link
               href="/my"
-              className="bg-white dark:bg-gray  dark:text-white w-44 h-10 flex justify-center place-items-center rounded-lg tex-sm md:text-xl text-black cursor-pointer whitespace-nowrap"
+              className="bg-green dark:bg-yellow-dark dark:text-black font-medium w-44 h-10 flex justify-center place-items-center rounded-lg tex-sm md:text-xl text-white cursor-pointer whitespace-nowrap"
             >
               My Words
             </Link>

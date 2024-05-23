@@ -1,11 +1,6 @@
 "use client";
 
 import { sendEmail } from "@/lib/sendEmail";
-import {
-  InputOTP,
-  InputOTPGroup,
-  InputOTPSlot,
-} from "@/components/ui/input-otp";
 import React, { useEffect, useState } from "react";
 import { PropagateLoader } from "react-spinners";
 
@@ -69,29 +64,21 @@ const VerifyTab = ({
       }`}
     >
       <div className="flex flex-col justify-center place-items-center">
-        <h1 className="pb-4 text-center text-[#776B5D]">
+        <h1 className="pb-4 text-center text-two">
           Your verification code has been sent to your email. <br /> Please
           check your inbox to continue.
         </h1>
-        <InputOTP
+        <input
+          type="number"
           className=""
           maxLength={6}
           value={inputCode}
           onChange={(value: any) => setInputCode(value)}
-        >
-          <InputOTPGroup>
-            <InputOTPSlot index={0} />
-            <InputOTPSlot index={1} />
-            <InputOTPSlot index={2} />
-            <InputOTPSlot index={3} />
-            <InputOTPSlot index={4} />
-            <InputOTPSlot index={5} />
-          </InputOTPGroup>
-        </InputOTP>
+        ></input>
       </div>
       <div className="w-full flex flex-col pt-4">
         {loading ? (
-          <div className="w-full h-10 bg-[#776B5D] rounded-lg text-[#F6F5F3] text-lg font-bold flex justify-center place-items-center">
+          <div className="w-full h-10 bg-two rounded-lg text-nine text-lg font-bold flex justify-center place-items-center">
             <PropagateLoader color="white" size={15} className="mb-4" />
           </div>
         ) : (
@@ -99,7 +86,7 @@ const VerifyTab = ({
             <button
               disabled={resendLoading}
               onClick={handleCodeCheck}
-              className="w-full select-none h-10 bg-[#776B5D] hover:bg-[#544c42] rounded-lg text-[#F6F5F3] text-lg font-bold flex justify-center place-items-center cursor-pointer"
+              className="w-full select-none h-10 bg-two hover:bg-four rounded-lg text-nine text-lg font-bold flex justify-center place-items-center cursor-pointer"
             >
               Verify
             </button>
@@ -107,17 +94,17 @@ const VerifyTab = ({
               resendText === "" ? (
                 <button
                   onClick={resendCode}
-                  className="w-full select-none h-10 text-[#776B5D] hover:text-[#544c42] text-lg underline flex justify-center place-items-center cursor-pointer"
+                  className="w-full select-none h-10 text-two hover:text-four text-lg underline flex justify-center place-items-center cursor-pointer"
                 >
                   Resend Verification Code
                 </button>
               ) : (
-                <p className="w-full select-none h-10 text-[#776B5D] text-lg flex justify-center place-items-center cursor-pointer">
+                <p className="w-full select-none h-10 text-two text-lg flex justify-center place-items-center cursor-pointer">
                   {resendText}
                 </p>
               )
             ) : (
-              <p className="w-full select-none h-10 text-[#776B5D] text-lg flex justify-center place-items-center">
+              <p className="w-full select-none h-10 text-two text-lg flex justify-center place-items-center">
                 Resend in {countdown} seconds
               </p>
             )}

@@ -13,7 +13,7 @@ export default async function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body> {children}</body>
+      <body className="bg-yellow dark:bg-gray-dark relative"> {children}</body>
     </html>
   );
 }

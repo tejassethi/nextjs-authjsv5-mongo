@@ -2,7 +2,6 @@
 
 import { loginHandler } from "@/lib/login";
 import { createUserWithCredentail } from "@/lib/actions/user.actions";
-import { redirect } from "next/navigation";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { PropagateLoader } from "react-spinners";
@@ -65,7 +64,7 @@ const CreateTab = ({
       setLoading(false);
       setError((loginResult.message as any) || "An error occured");
     }
-    router.push("/member");
+    router.push("/");
   };
 
   return (
@@ -73,33 +72,19 @@ const CreateTab = ({
       className={`flex flex-col space-y-4 ${loading && "pointer-events-none"}`}
     >
       <div className="relative">
-        <label
-          htmlFor="email"
-          className="font-semibold text-[#776B5D] bg-[#F8F7F4] px-1 py-[1px] rounded-lg text-lg absolute -right-3 -top-3  z-20"
-        >
-          Email
-        </label>
         <input
           id="email"
           type="email"
           name="email"
           value={email}
           disabled
-          placeholder="Email"
-          className={`w-full active:outline-none hover:outline-none outline-none border-2 rounded-lg p-2 relative ${
-            false ? "border-red-300" : "border-[#EAD8C0]"
-          }`}
-        ></input>
+          className="bg-gray-100 w-full text-md px-4 py-3.5 bg-[#FFFFFF] dark:bg-gray rounded-md outline-green-dark dark:outline-yellow"
+          placeholder="Email address"
+        />
       </div>
       <div className="relative">
-        <label
-          htmlFor="name"
-          className="font-semibold text-[#776B5D] bg-[#F8F7F4] px-1 py-[1px] rounded-lg text-lg absolute -right-3 -top-3  z-20"
-        >
-          Name
-        </label>
         {nameError && (
-          <p className="text-sm text-red-400 text-center absolute z-40 -top-2 left-[50%] -translate-x-[50%] bg-white px-1 rounded-lg">
+          <p className="text-sm text-red dark:text-red-light p-2 rounded-lg -top-1 right-1 absolute">
             {nameError}
           </p>
         )}
@@ -110,20 +95,12 @@ const CreateTab = ({
           value={name}
           onChange={(e) => setName(e.target.value)}
           placeholder="Name"
-          className={`w-full active:outline-none hover:outline-none outline-none border-2 rounded-lg p-2 relative ${
-            false ? "border-red-300" : "border-[#EAD8C0]"
-          }`}
+          className="bg-gray-100 w-full text-md px-4 py-3.5 bg-[#FFFFFF] dark:bg-gray rounded-md outline-green-dark dark:outline-yellow"
         ></input>
       </div>
       <div className="relative">
-        <label
-          htmlFor="password"
-          className="font-semibold text-[#776B5D] bg-[#F8F7F4] px-1 py-[1px] rounded-lg text-lg absolute -right-3 -top-3  z-20"
-        >
-          Password
-        </label>
         {passwordError && (
-          <p className="text-sm text-red-400 text-center absolute z-40 -top-2 left-[50%] -translate-x-[50%] bg-white px-1 rounded-lg">
+          <p className="text-sm text-red dark:text-red-light p-2 rounded-lg -top-1 right-1 absolute">
             {passwordError}
           </p>
         )}
@@ -134,20 +111,12 @@ const CreateTab = ({
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           placeholder="Password"
-          className={`w-full active:outline-none hover:outline-none outline-none border-2 rounded-lg p-2 relative ${
-            false ? "border-red-300" : "border-[#EAD8C0]"
-          }`}
+          className="bg-gray-100 w-full text-md px-4 py-3.5 bg-[#FFFFFF] dark:bg-gray rounded-md outline-green-dark dark:outline-yellow"
         ></input>
       </div>
       <div className="relative">
-        <label
-          htmlFor="confirmPassword"
-          className="font-semibold text-[#776B5D] bg-[#F8F7F4] px-1 py-[1px] rounded-lg text-lg absolute -right-3 -top-3  z-20"
-        >
-          Confirm Password
-        </label>
         {confirmPasswordError && (
-          <p className="text-sm text-red-400 text-center absolute z-40 -top-2 left-[50%] -translate-x-[50%] bg-white px-1 rounded-lg">
+          <p className="text-sm text-red dark:text-red-light p-2 rounded-lg -top-1 right-1 absolute">
             {confirmPasswordError}
           </p>
         )}
@@ -158,20 +127,18 @@ const CreateTab = ({
           value={confirmPassword}
           onChange={(e) => setConfirmPassword(e.target.value)}
           placeholder="Confirm Password"
-          className={`w-full active:outline-none hover:outline-none outline-none border-2 rounded-lg p-2 relative ${
-            false ? "border-red-300" : "border-[#EAD8C0]"
-          }`}
+          className="bg-gray-100 w-full text-md px-4 py-3.5 bg-[#FFFFFF] dark:bg-gray rounded-md outline-green-dark dark:outline-yellow"
         ></input>
       </div>
       <div className="w-full flex flex-col">
         {loading ? (
-          <div className="w-full h-10 bg-[#776B5D] rounded-lg text-[#F6F5F3] text-lg font-bold flex justify-center place-items-center">
+          <div className="w-full h-12 text-lg flex justify-center font-semibold  rounded-lg text-white bg-green hover:bg-green-dark dark:text-black dark:bg-yellow-dark dark:hover:bg-yellow focus:outline-none">
             <PropagateLoader color="white" size={15} className="mb-4" />
           </div>
         ) : (
           <button
             onClick={handleCreateUser}
-            className="w-full select-none h-10 bg-[#776B5D] hover:bg-[#544c42] rounded-lg text-[#F6F5F3] text-lg font-bold flex justify-center place-items-center cursor-pointer"
+            className="w-full h-12 text-lg font-semibold  rounded-lg text-white bg-green hover:bg-green-dark dark:text-black dark:bg-yellow-dark dark:hover:bg-yellow ocus:outline-none"
           >
             Create Account
           </button>

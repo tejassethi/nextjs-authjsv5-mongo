@@ -10,7 +10,7 @@
 //     const LoginError = await loginHandler(email, password);
 //     if (!singupError && !LoginError) {
 //       console.log("success");
-//       redirect("/member");
+//       redirect("/");
 //     } else {
 //       console.log(singupError || LoginError);
 //     }

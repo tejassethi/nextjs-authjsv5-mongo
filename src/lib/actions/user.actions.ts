@@ -1,6 +1,5 @@
 "use server";
 
-import { revalidatePath } from "next/cache";
 import { User } from "@/lib/models/userModel";
 import { connectToDatabase } from "../database/db";
 import { compare, hash } from "bcryptjs";

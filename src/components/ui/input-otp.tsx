@@ -4,7 +4,7 @@ import * as React from "react";
 import { OTPInput, OTPInputContext } from "input-otp";
 import { Dot } from "lucide-react";
 
-import { cn } from "@/lib/database/utils";
+import { cn } from "@/lib/utils";
 
 const InputOTP = React.forwardRef<
   React.ElementRef<typeof OTPInput>,
@@ -41,8 +41,9 @@ const InputOTPSlot = React.forwardRef<
     <div
       ref={ref}
       className={cn(
-        "relative flex h-10 w-10  md:h-12 md:w-12 items-center justify-center border-y border-r border-[#776B5D] text-sm md:text-lg transition-all first:rounded-l-md first:border-l last:rounded-r-md",
-        isActive && "z-10 ring-2 ring-ring ring-offset-background",
+        "relative flex h-14 w-14 items-center justify-center border-y border-r border-input text-xl transition-all first:rounded-l-md first:border-l last:rounded-r-md",
+        isActive &&
+          "z-10 ring-2 ring-ring ring-offset-green-dark dark:ring-offset-yellow-dark",
         className
       )}
       {...props}
@@ -50,7 +51,7 @@ const InputOTPSlot = React.forwardRef<
       {char}
       {hasFakeCaret && (
         <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
-          <div className="h-4 w-px animate-caret-[#776B5D] bg-[#776B5D] duration-1000" />
+          <div className="h-4 w-px animate-caret-blink bg-foreground duration-1000" />
         </div>
       )}
     </div>

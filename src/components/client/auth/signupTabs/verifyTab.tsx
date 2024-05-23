@@ -1,11 +1,11 @@
 "use client";
 
-import { sendEmail } from "@/lib/sendEmail";
 import {
   InputOTP,
   InputOTPGroup,
   InputOTPSlot,
 } from "@/components/ui/input-otp";
+import { sendEmail } from "@/lib/sendEmail";
 import React, { useEffect, useState } from "react";
 import { PropagateLoader } from "react-spinners";
 
@@ -69,29 +69,31 @@ const VerifyTab = ({
       }`}
     >
       <div className="flex flex-col justify-center place-items-center">
-        <h1 className="pb-4 text-center text-[#776B5D]">
+        <h1 className="pb-4 text-center font-semibold">
           Your verification code has been sent to your email. <br /> Please
           check your inbox to continue.
         </h1>
-        <InputOTP
-          className=""
-          maxLength={6}
-          value={inputCode}
-          onChange={(value: any) => setInputCode(value)}
-        >
-          <InputOTPGroup>
-            <InputOTPSlot index={0} />
-            <InputOTPSlot index={1} />
-            <InputOTPSlot index={2} />
-            <InputOTPSlot index={3} />
-            <InputOTPSlot index={4} />
-            <InputOTPSlot index={5} />
-          </InputOTPGroup>
-        </InputOTP>
+        <div>
+          <InputOTP
+            className="pt-4"
+            maxLength={6}
+            value={inputCode}
+            onChange={(value: any) => setInputCode(value)}
+          >
+            <InputOTPGroup>
+              <InputOTPSlot index={0} />
+              <InputOTPSlot index={1} />
+              <InputOTPSlot index={2} />
+              <InputOTPSlot index={3} />
+              <InputOTPSlot index={4} />
+              <InputOTPSlot index={5} />
+            </InputOTPGroup>
+          </InputOTP>
+        </div>
       </div>
       <div className="w-full flex flex-col pt-4">
         {loading ? (
-          <div className="w-full h-10 bg-[#776B5D] rounded-lg text-[#F6F5F3] text-lg font-bold flex justify-center place-items-center">
+          <div className="w-full h-12 text-lg flex justify-center font-semibold  rounded-lg text-white bg-green hover:bg-green-dark dark:text-black dark:bg-yellow-dark dark:hover:bg-yellow focus:outline-none">
             <PropagateLoader color="white" size={15} className="mb-4" />
           </div>
         ) : (
@@ -99,25 +101,26 @@ const VerifyTab = ({
             <button
               disabled={resendLoading}
               onClick={handleCodeCheck}
-              className="w-full select-none h-10 bg-[#776B5D] hover:bg-[#544c42] rounded-lg text-[#F6F5F3] text-lg font-bold flex justify-center place-items-center cursor-pointer"
+              className="w-full h-12 text-lg font-semibold  rounded-lg text-white bg-green hover:bg-green-dark dark:text-black dark:bg-yellow-dark dark:hover:bg-yellow ocus:outline-none"
             >
               Verify
             </button>
+
             {showResendButton ? (
               resendText === "" ? (
                 <button
                   onClick={resendCode}
-                  className="w-full select-none h-10 text-[#776B5D] hover:text-[#544c42] text-lg underline flex justify-center place-items-center cursor-pointer"
+                  className="w-full pt-2 select-none h-10 text-two hover:text-four text-lg text-black hover:text-green dark:text-white dark:hover:text-yellow-dark flex justify-center place-items-center cursor-pointer"
                 >
                   Resend Verification Code
                 </button>
               ) : (
-                <p className="w-full select-none h-10 text-[#776B5D] text-lg flex justify-center place-items-center cursor-pointer">
+                <p className="w-full select-none h-10 text-two text-lg flex justify-center place-items-center cursor-pointer">
                   {resendText}
                 </p>
               )
             ) : (
-              <p className="w-full select-none h-10 text-[#776B5D] text-lg flex justify-center place-items-center">
+              <p className="w-full select-none h-10 pt-4 text-two text-lg flex justify-center place-items-center">
                 Resend in {countdown} seconds
               </p>
             )}
