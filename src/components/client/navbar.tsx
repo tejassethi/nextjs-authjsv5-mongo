@@ -5,7 +5,7 @@ import React, { useEffect, useRef, useState } from "react";
 import ColorModeToggle from "./ColorModeToggle";
 import { CgMenu } from "react-icons/cg";
 import Link from "next/link";
-import { currentUser } from "@/hooks/current-user";
+import { currentUser } from "@/hooks/use-current-user";
 import { FaUser } from "react-icons/fa";
 import { PiSignOutBold, PiNutBold, PiMoney } from "react-icons/pi";
 import { signOut } from "next-auth/react";
