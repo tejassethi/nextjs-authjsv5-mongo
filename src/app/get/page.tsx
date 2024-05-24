@@ -12,7 +12,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Navbar from "@/components/client/navbar";
 import Link from "next/link";
 import Heading from "@/components/client/heading";
@@ -28,19 +28,25 @@ export default function GetWords() {
   const submit = () => {
     if (receivedText == "" && receivedURL == "" && acceptedFiles.length < 1) {
       setError("Please fill in at least one field before proceeding.");
+      return;
     }
-    if (receivedText && !validText) {
+    if ((receivedText && !validText) || (receivedURL && !validURL)) {
       setError("Please review for any issues before proceeding.");
       return;
     }
-    if (receivedURL && !validURL) {
-      setError("Please review for any issues before proceeding.");
-      return;
-    }
-    return;
+    setError("");
+    console.log("asdf");
   };
 
+  useEffect(() => {
+    if (receivedURL == "") setValidURL(null);
+  }, [receivedURL]);
+
   const isValidHttpUrl = (string: any) => {
+    if (receivedURL == "") {
+      setValidURL(null);
+      return;
+    }
     var urlPattern = new RegExp(
       "^(https?:\\/\\/)?" +
         "((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|" +
@@ -92,7 +98,7 @@ export default function GetWords() {
         className="min-h-screen flex justify-center font-OpenSans dark:text-white pb-10 md:pb-0 select-none relative"
       >
         <div className="w-full sm:px-10 px-5 xl:px-0">
-          <div className="md:pt-24">
+          <div className="md:pt-20">
             <Heading />
           </div>
           <div className="flex md:space-x-8 space-x-2 md:pt-14 pt-10 w-full  justify-center place-items-center">
@@ -130,7 +136,7 @@ export default function GetWords() {
                 }`}
               >
                 <AccordionTrigger
-                  onClick={() =>
+                  onMouseDown={() =>
                     setAccordion(accordion == "item-1" ? "" : "item-1")
                   }
                   className={`font-semibold relative ${
@@ -160,7 +166,7 @@ export default function GetWords() {
                         </div>
                         <div
                           className="text-white dark:text-gray"
-                          onClick={() => {
+                          onMouseDown={() => {
                             acceptedFiles.length = 0;
                             acceptedFiles.splice(0, acceptedFiles.length);
                           }}
@@ -176,7 +182,7 @@ export default function GetWords() {
 
                 <AccordionContent>
                   <div
-                    onClick={open}
+                    onMouseDown={open}
                     className="w-full md:h-60 h-40 rounded-lg bg-yellow dark:bg-gray-dark flex justify-center place-items-center"
                   >
                     <input {...getInputProps()} />
@@ -203,7 +209,7 @@ export default function GetWords() {
                   className={`font-semibold relative ${
                     receivedText != "" && "text-white dark:text-black"
                   }`}
-                  onClick={() =>
+                  onMouseDown={() =>
                     setAccordion(accordion == "item-2" ? "" : "item-2")
                   }
                 >
@@ -239,7 +245,7 @@ export default function GetWords() {
                   className={`font-semibold relative ${
                     validURL && "text-white dark:text-black"
                   }`}
-                  onClick={() =>
+                  onMouseDown={() =>
                     setAccordion(accordion == "item-3" ? "" : "item-3")
                   }
                 >
@@ -275,7 +281,7 @@ export default function GetWords() {
           </div>
           <div
             className="flex pt-6 w-full justify-center place-items-center"
-            onClick={submit}
+            onMouseDown={submit}
           >
             <div className="bg-green dark:bg-yellow-dark dark:text-black  text-white font-medium md:w-80 w-full h-10 flex justify-center place-items-center rounded-lg md:text-xl text-lg  cursor-pointer">
               GET WORDS

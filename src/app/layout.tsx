@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import { SessionProvider } from "next-auth/react";
+import { Providers } from "./providers";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -12,8 +14,12 @@ export default async function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className="bg-yellow dark:bg-gray-dark relative"> {children}</body>
-    </html>
+    <SessionProvider>
+      <html lang="en" suppressHydrationWarning>
+        <body className="bg-yellow dark:bg-gray-dark text-black dark:text-white relative">
+          <Providers>{children}</Providers>
+        </body>
+      </html>
+    </SessionProvider>
   );
 }

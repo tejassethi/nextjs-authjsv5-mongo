@@ -24,31 +24,29 @@ const ChangeTab = ({
   const router = useRouter();
 
   const handleCreateUser = async () => {
+    let valid = true;
+
     if (password === "") {
-      setPasswordError("Input password");
-      return;
+      setPasswordError("Please enter a password.");
+      valid = false;
+    } else if (password.length < 8) {
+      setPasswordError("Please enter a password with at least 8 characters.");
+      valid = false;
+    } else {
+      setPasswordError("");
     }
-    if (await compare(password, oldPassword)) {
-      setPasswordError("Old password detected.");
-      return;
-    }
-    if (password.length < 8) {
-      setPasswordError("At least 8 characters");
-      return;
-    }
-    setPasswordError("");
 
     if (confirmPassword === "") {
-      setConfirmPasswordError("Input password again");
-      return;
+      setConfirmPasswordError("Please re-enter your password.");
+      valid = false;
+    } else if (password !== confirmPassword) {
+      setConfirmPasswordError("Your entered passwords do not match.");
+      valid = false;
+    } else {
+      setConfirmPasswordError("");
     }
-    setConfirmPasswordError("");
 
-    if (password !== confirmPassword) {
-      setConfirmPasswordError("Passwords do not match");
-      return;
-    }
-    setConfirmPasswordError("");
+    if (!valid) return;
 
     setLoading(true);
 
@@ -70,12 +68,6 @@ const ChangeTab = ({
       className={`flex flex-col space-y-4 ${loading && "pointer-events-none"}`}
     >
       <div className="relative">
-        <label
-          htmlFor="email"
-          className="font-semibold text-two bg-ten px-1 py-[1px] rounded-lg text-lg absolute -right-3 -top-3  z-20"
-        >
-          Email
-        </label>
         <input
           id="email"
           type="email"
@@ -83,23 +75,10 @@ const ChangeTab = ({
           value={email}
           disabled
           placeholder="Email"
-          className={`w-full active:outline-none hover:outline-none outline-none border-2 rounded-lg p-2 relative ${
-            false ? "border-red-300" : "border-five"
-          }`}
+          className="bg-gray-100 w-full text-md px-4 py-3.5 bg-[#FFFFFF] dark:bg-gray rounded-md outline-green-dark dark:outline-yellow"
         ></input>
       </div>
       <div className="relative">
-        <label
-          htmlFor="password"
-          className="font-semibold text-two bg-ten px-1 py-[1px] rounded-lg text-lg absolute -right-3 -top-3  z-20"
-        >
-          Password
-        </label>
-        {passwordError && (
-          <p className="text-sm text-red-400 text-center absolute z-40 -top-2 left-[50%] -translate-x-[50%] bg-white px-1 rounded-lg">
-            {passwordError}
-          </p>
-        )}
         <input
           id="password"
           type="password"
@@ -107,23 +86,10 @@ const ChangeTab = ({
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           placeholder="Password"
-          className={`w-full active:outline-none hover:outline-none outline-none border-2 rounded-lg p-2 relative ${
-            false ? "border-red-300" : "border-five"
-          }`}
+          className="bg-gray-100 w-full text-md px-4 py-3.5 bg-[#FFFFFF] dark:bg-gray rounded-md outline-green-dark dark:outline-yellow"
         ></input>
       </div>
       <div className="relative">
-        <label
-          htmlFor="confirmPassword"
-          className="font-semibold text-two bg-ten px-1 py-[1px] rounded-lg text-lg absolute -right-3 -top-3  z-20"
-        >
-          Confirm Password
-        </label>
-        {confirmPasswordError && (
-          <p className="text-sm text-red-400 text-center absolute z-40 -top-2 left-[50%] -translate-x-[50%] bg-white px-1 rounded-lg">
-            {confirmPasswordError}
-          </p>
-        )}
         <input
           id="confirmPassword"
           type="password"
@@ -131,26 +97,36 @@ const ChangeTab = ({
           value={confirmPassword}
           onChange={(e) => setConfirmPassword(e.target.value)}
           placeholder="Confirm Password"
-          className={`w-full active:outline-none hover:outline-none outline-none border-2 rounded-lg p-2 relative ${
-            false ? "border-red-300" : "border-five"
-          }`}
+          className="bg-gray-100 w-full text-md px-4 py-3.5 bg-[#FFFFFF] dark:bg-gray rounded-md outline-green-dark dark:outline-yellow"
         ></input>
       </div>
       <div className="w-full flex flex-col">
         {loading ? (
-          <div className="w-full h-10 bg-two rounded-lg text-nine text-lg font-bold flex justify-center place-items-center">
+          <div className="w-full h-12 text-lg flex justify-center place font-semibold  rounded-lg text-white bg-green hover:bg-green-dark dark:text-black dark:bg-yellow-dark dark:hover:bg-yellow focus:outline-none">
             <PropagateLoader color="white" size={15} className="mb-4" />
           </div>
         ) : (
           <button
-            onClick={handleCreateUser}
-            className="w-full select-none h-10 bg-two hover:bg-four rounded-lg text-nine text-lg font-bold flex justify-center place-items-center cursor-pointer"
+            onMouseDown={handleCreateUser}
+            className="w-full h-12 text-lg font-semibold  rounded-lg text-white bg-green hover:bg-green-dark dark:text-black dark:bg-yellow-dark dark:hover:bg-yellow ocus:outline-none"
           >
-            Reset Password
+            Change Password
           </button>
         )}
+      </div>
+      <div className="flex flex-col space-y-1">
+        {passwordError && (
+          <p className="text-sm text-red dark:text-red-light text-center">
+            {passwordError}
+          </p>
+        )}
+        {confirmPasswordError && (
+          <p className="text-sm text-red dark:text-red-light text-center">
+            {confirmPasswordError}
+          </p>
+        )}
         {error && (
-          <p className="text-sm text-red-400 text-center bg-white rounded-lg">
+          <p className="text-sm text-red dark:text-red-light text-center">
             {error}
           </p>
         )}

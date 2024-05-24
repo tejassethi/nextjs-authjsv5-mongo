@@ -90,7 +90,7 @@ export default function MyWords() {
 
       <div className="min-h-screen flex justify-center font-OpenSans dark:text-white pb-10 md:pb-0 select-none relative">
         <div className="w-full sm:px-10 px-5 xl:px-0">
-          <div className="md:pt-24">
+          <div className="md:pt-20">
             <Heading />
           </div>
           <div className="flex md:space-x-8 space-x-2 md:pt-14 pt-10 w-full  justify-center place-items-center">

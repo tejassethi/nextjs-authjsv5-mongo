@@ -18,7 +18,7 @@ export async function createUserWithGoogle(
     });
     return { success: true, message: JSON.parse(JSON.stringify(newUser)) };
   } catch (error) {
-    return { success: false, message: "An error occured. Please try again" };
+    return { success: false, message: "An error occured. Please try again." };
   }
 }
 
@@ -37,7 +37,7 @@ export async function createUserWithCredentail(
     });
     return { success: true, message: JSON.parse(JSON.stringify(newUser)) };
   } catch (error) {
-    return { success: false, message: "An error occured. Please try again" };
+    return { success: false, message: "An error occured. Please try again." };
   }
 }
 
@@ -54,7 +54,7 @@ export async function authorizeUser(email: any, password: any) {
       .populate("plan");
 
     if (!user) throw new Error("Invalid credentials");
-    if (!user.password) throw new Error("Please sign in with your provider");
+    if (!user.password) throw new Error("Please sign in with your provider.");
     const isMatch = await compare(password, user.password);
     if (!isMatch) throw new Error("Incorrect Password");
     const userObject = user.toObject();
@@ -63,9 +63,20 @@ export async function authorizeUser(email: any, password: any) {
     console.log("done");
     return { success: true, data: userSafe };
   } catch (error: any) {
+    console.log(error);
+    let errorMessage = "An error occurred. Please try again.";
+    if (
+      [
+        "Invalid credentials",
+        "Please sign in with your provider.",
+        "Incorrect Password",
+      ].includes(error.message)
+    ) {
+      errorMessage = error.message;
+    }
     return {
       success: false,
-      message: error.message || "An error occured. Please try again",
+      message: errorMessage,
     };
   }
 }
@@ -82,10 +93,14 @@ export async function getUser(email: any) {
 
     return { success: true, data: user.toObject() };
   } catch (error) {
+    let errorMessage = "An error occurred. Please try again.";
+    if (["Invalid credentials"].includes((error as Error)?.message)) {
+      errorMessage = (error as Error)?.message;
+    }
+    console.log((error as Error)?.message);
     return {
       success: false,
-      message:
-        (error as Error)?.message || "An error occured. Please try again",
+      message: errorMessage,
     };
   }
 }
@@ -104,10 +119,14 @@ export async function getUserWithPassword(email: any) {
 
     return { success: true, data: user.toObject() };
   } catch (error) {
+    let errorMessage = "An error occurred. Please try again.";
+    if (["Invalid credentials"].includes((error as Error)?.message)) {
+      errorMessage = (error as Error)?.message;
+    }
+    console.log((error as Error)?.message);
     return {
       success: false,
-      message:
-        (error as Error)?.message || "An error occured. Please try again",
+      message: errorMessage,
     };
   }
 }
@@ -122,6 +141,6 @@ export async function resetPassword(email: any, password: any) {
     );
     return { success: true, message: JSON.parse(JSON.stringify(newUser)) };
   } catch (error) {
-    return { success: false, message: "An error occured. Please try again" };
+    return { success: false, message: "An error occured. Please try again." };
   }
 }

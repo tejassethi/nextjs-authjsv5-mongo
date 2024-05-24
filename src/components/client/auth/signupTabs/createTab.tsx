@@ -24,33 +24,36 @@ const CreateTab = ({
   const router = useRouter();
 
   const handleCreateUser = async () => {
+    let valid = true;
+
     if (name === "") {
-      setNameError("Input Name");
-      return;
+      setNameError("Please enter your full name.");
+      valid = false;
+    } else {
+      setNameError("");
     }
-    setNameError("");
 
     if (password === "") {
-      setPasswordError("Input password");
-      return;
+      setPasswordError("Please enter a password.");
+      valid = false;
+    } else if (password.length < 8) {
+      setPasswordError("Please enter a password with at least 8 characters.");
+      valid = false;
+    } else {
+      setPasswordError("");
     }
-    if (password.length < 8) {
-      setPasswordError("At least 8 characters");
-      return;
-    }
-    setPasswordError("");
 
     if (confirmPassword === "") {
-      setConfirmPasswordError("Input password again");
-      return;
+      setConfirmPasswordError("Please re-enter your password.");
+      valid = false;
+    } else if (password !== confirmPassword) {
+      setConfirmPasswordError("Your entered passwords do not match.");
+      valid = false;
+    } else {
+      setConfirmPasswordError("");
     }
-    setConfirmPasswordError("");
 
-    if (password !== confirmPassword) {
-      setConfirmPasswordError("Passwords do not match");
-      return;
-    }
-    setConfirmPasswordError("");
+    if (!valid) return;
 
     setLoading(true);
 
@@ -83,11 +86,6 @@ const CreateTab = ({
         />
       </div>
       <div className="relative">
-        {nameError && (
-          <p className="text-sm text-red dark:text-red-light p-2 rounded-lg -top-1 right-1 absolute">
-            {nameError}
-          </p>
-        )}
         <input
           id="name"
           type="text"
@@ -95,15 +93,12 @@ const CreateTab = ({
           value={name}
           onChange={(e) => setName(e.target.value)}
           placeholder="Name"
-          className="bg-gray-100 w-full text-md px-4 py-3.5 bg-[#FFFFFF] dark:bg-gray rounded-md outline-green-dark dark:outline-yellow"
+          className={`bg-gray-100 w-full text-md px-4 py-3.5 bg-[#FFFFFF] dark:bg-gray rounded-md outline-green-dark dark:outline-yellow ${
+            nameError && "border-t-2 border-red dark:border-red-light"
+          }`}
         ></input>
       </div>
       <div className="relative">
-        {passwordError && (
-          <p className="text-sm text-red dark:text-red-light p-2 rounded-lg -top-1 right-1 absolute">
-            {passwordError}
-          </p>
-        )}
         <input
           id="password"
           type="password"
@@ -111,15 +106,12 @@ const CreateTab = ({
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           placeholder="Password"
-          className="bg-gray-100 w-full text-md px-4 py-3.5 bg-[#FFFFFF] dark:bg-gray rounded-md outline-green-dark dark:outline-yellow"
+          className={`bg-gray-100 w-full text-md px-4 py-3.5 bg-[#FFFFFF] dark:bg-gray rounded-md outline-green-dark dark:outline-yellow ${
+            passwordError && "border-t-2 border-red dark:border-red-light"
+          }`}
         ></input>
       </div>
       <div className="relative">
-        {confirmPasswordError && (
-          <p className="text-sm text-red dark:text-red-light p-2 rounded-lg -top-1 right-1 absolute">
-            {confirmPasswordError}
-          </p>
-        )}
         <input
           id="confirmPassword"
           type="password"
@@ -127,24 +119,44 @@ const CreateTab = ({
           value={confirmPassword}
           onChange={(e) => setConfirmPassword(e.target.value)}
           placeholder="Confirm Password"
-          className="bg-gray-100 w-full text-md px-4 py-3.5 bg-[#FFFFFF] dark:bg-gray rounded-md outline-green-dark dark:outline-yellow"
+          className={`bg-gray-100 w-full text-md px-4 py-3.5 bg-[#FFFFFF] dark:bg-gray rounded-md outline-green-dark dark:outline-yellow ${
+            confirmPasswordError &&
+            "border-t-2 border-red dark:border-red-light"
+          }`}
         ></input>
       </div>
       <div className="w-full flex flex-col">
         {loading ? (
-          <div className="w-full h-12 text-lg flex justify-center place-items-center font-semibold  rounded-lg text-white bg-green hover:bg-green-dark dark:text-black dark:bg-yellow-dark dark:hover:bg-yellow focus:outline-none">
+          <div className="w-full h-12 text-lg flex justify-center place font-semibold  rounded-lg text-white bg-green hover:bg-green-dark dark:text-black dark:bg-yellow-dark dark:hover:bg-yellow focus:outline-none">
             <PropagateLoader color="white" size={15} className="mb-4" />
           </div>
         ) : (
           <button
-            onClick={handleCreateUser}
+            onMouseDown={handleCreateUser}
             className="w-full h-12 text-lg font-semibold  rounded-lg text-white bg-green hover:bg-green-dark dark:text-black dark:bg-yellow-dark dark:hover:bg-yellow ocus:outline-none"
           >
             Create Account
           </button>
         )}
+      </div>
+      <div className="flex flex-col space-y-1">
+        {nameError && (
+          <p className="text-sm text-red dark:text-red-light text-center">
+            {nameError}
+          </p>
+        )}
+        {passwordError && (
+          <p className="text-sm text-red dark:text-red-light text-center">
+            {passwordError}
+          </p>
+        )}
+        {confirmPasswordError && (
+          <p className="text-sm text-red dark:text-red-light text-center">
+            {confirmPasswordError}
+          </p>
+        )}
         {error && (
-          <p className="text-sm text-red-400 text-center bg-white rounded-lg">
+          <p className="text-sm text-red dark:text-red-light text-center">
             {error}
           </p>
         )}

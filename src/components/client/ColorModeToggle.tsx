@@ -1,42 +1,47 @@
 "use client";
 
-import { useEffect, useState } from "react";
 import { BsCloudMoon, BsCloudMoonFill } from "react-icons/bs";
-import cookies from "js-cookie";
 
-//Toggle logic
+import { useState, useEffect } from "react";
+import { useTheme } from "next-themes";
+import Image from "next/image";
+
 export default function ColorModeToggle() {
-  const [checked, setChecked] = useState(false);
+  const [mounted, setMounted] = useState(false);
+  const { setTheme, resolvedTheme } = useTheme();
 
-  const toggleDarkMode = () => {
-    if (checked) {
-      setChecked(false);
-      document.documentElement.classList.remove("dark");
-      cookies.set("DarkMode", "false");
-    } else {
-      setChecked(true);
-      document.documentElement.classList.add("dark");
-      cookies.set("DarkMode", "true");
-    }
-  };
+  useEffect(() => setMounted(true), []);
 
-  useEffect(() => {
-    if (cookies.get("DarkMode") === "true") {
-      setChecked(true);
-      document.documentElement.classList.add("dark");
-    }
-  }, []);
+  if (!mounted)
+    return (
+      <div>
+        <BsCloudMoon
+          size={30}
+          className="text-green cursor-pointer dark:text-yellow-dark"
+        />
+      </div>
+    );
 
-  return (
-    <div onClick={toggleDarkMode} className="cursor-pointer">
-      {checked ? (
-        <BsCloudMoon size={30} className="text-green dark:text-yellow-dark" />
-      ) : (
+  if (resolvedTheme === "dark") {
+    return (
+      <div className="cursor-pointer" onMouseDown={() => setTheme("light")}>
+        <BsCloudMoon
+          size={30}
+          className="text-green cursor-pointer dark:text-yellow-dark"
+        />
+      </div>
+    );
+  }
+
+  if (resolvedTheme === "light") {
+    return (
+      <div className="cursor-pointer" onMouseDown={() => setTheme("dark")}>
         <BsCloudMoonFill
           size={30}
-          className="text-green dark:text-yellow-dark"
+          className="text-green cursor-pointer dark:text-yellow-dark"
+          onMouseDown={() => setTheme("dark")}
         />
-      )}
-    </div>
-  );
+      </div>
+    );
+  }
 }

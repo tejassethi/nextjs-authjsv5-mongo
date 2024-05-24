@@ -14,7 +14,7 @@ const ForgotForm = () => {
   const [page, setPage] = useState<any>("email");
 
   return (
-    <div>
+    <div className="pt-8">
       {page == "email" && (
         <EmailTab
           email={email}

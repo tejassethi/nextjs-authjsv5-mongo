@@ -19,12 +19,12 @@ const page = async () => {
 
       <div className="min-h-screen flex justify-center font-OpenSans dark:text-white pb-10 md:pb-0 select-none relative">
         <div className="w-full sm:px-10 px-5 xl:px-0">
-          <div className="md:pt-24">
+          <div className="md:pt-20">
             <Heading />
           </div>
           <div className="w-full flex justify-center place-items-center">
             <div className=" max-w-md w-full pt-16">
-              <h3 className="pb-4 text-3xl font-extrabold mb-8 text-center text-green dark:text-yellow-dark">
+              <h3 className="pb-4 text-3xl font-bold text-center text-green dark:text-yellow-dark">
                 Log in
               </h3>
               <form
@@ -33,7 +33,7 @@ const page = async () => {
                   await signIn("google");
                 }}
               >
-                <div className="flex justify-center">
+                <div className="flex justify-center pt-4">
                   <button
                     type="submit"
                     className="flex w-full justify-center place-items-center items-center bg-[#FFFFFF] hover:shadow-md  dark:bg-gray dark:hover:bg-gray  rounded-lg px-4 py-3.5 text-sm font-medium text-gray-800 dark:text-white hover:bg-gray-200 focus:outline-none"

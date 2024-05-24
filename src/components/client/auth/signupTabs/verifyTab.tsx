@@ -100,7 +100,7 @@ const VerifyTab = ({
           <>
             <button
               disabled={resendLoading}
-              onClick={handleCodeCheck}
+              onMouseDown={handleCodeCheck}
               className="w-full h-12 text-lg font-semibold  rounded-lg text-white bg-green hover:bg-green-dark dark:text-black dark:bg-yellow-dark dark:hover:bg-yellow ocus:outline-none"
             >
               Verify
@@ -109,8 +109,8 @@ const VerifyTab = ({
             {showResendButton ? (
               resendText === "" ? (
                 <button
-                  onClick={resendCode}
-                  className="w-full pt-2 select-none h-10 text-two hover:text-four text-lg text-black hover:text-green dark:text-white dark:hover:text-yellow-dark flex justify-center place-items-center cursor-pointer"
+                  onMouseDown={resendCode}
+                  className="w-full pt-2 select-none h-10 underline text-two hover:text-four text-lg text-black hover:text-green dark:text-white dark:hover:text-yellow-dark flex justify-center place-items-center cursor-pointer"
                 >
                   Resend Verification Code
                 </button>

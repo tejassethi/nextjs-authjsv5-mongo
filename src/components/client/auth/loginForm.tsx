@@ -9,24 +9,34 @@ import Link from "next/link";
 const LoginForm = () => {
   const [email, setEmail] = useState<any>("");
   const [password, setPassword] = useState<any>("");
-  const [emailError, setEmailError] = useState<any>("");
-  const [passwordError, setPasswordError] = useState<any>("");
+  const [emailError, setEmailError] = useState<any>(false);
+  const [passwordError, setPasswordError] = useState<any>(false);
   const [error, setError] = useState<any>("");
   const [loading, setLoading] = useState(false);
 
   const router = useRouter();
 
   const handleSubmit = async () => {
+    if (email === "" && password === "") {
+      setEmailError(true);
+      setPasswordError(true);
+      setError("Please enter an email address and a password.");
+      return;
+    }
     if (email === "") {
-      setEmailError("Required");
+      setEmailError(true);
+      setError("Please enter an email address.");
       return;
     }
     if (password === "") {
-      setPasswordError("Required");
+      setPasswordError(true);
+      setError("Please enter a password.");
       return;
     }
-    setEmailError("");
-    setPasswordError("");
+
+    setEmailError(false);
+    setPasswordError(false);
+    setError("");
     setLoading(true);
     const response = await loginHandler(email, password);
     console.log("response", response.message);
@@ -42,11 +52,6 @@ const LoginForm = () => {
   return (
     <>
       <div className="pb-2 relative">
-        {emailError && (
-          <p className="text-sm text-red dark:text-red-light p-2 rounded-lg -top-1 right-1 absolute">
-            {emailError}
-          </p>
-        )}
         <input
           name="email"
           type="email"
@@ -54,16 +59,14 @@ const LoginForm = () => {
           required
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-          className="bg-gray-100 w-full text-md px-4 py-3.5 bg-[#FFFFFF] dark:bg-gray rounded-md outline-green-dark dark:outline-yellow"
+          className={`bg-gray-100 w-full text-md px-4 py-3.5 bg-[#FFFFFF] dark:bg-gray rounded-md outline-green-dark dark:outline-yellow ${
+            emailError ||
+            (error && "border-t-2 border-red dark:border-red-light")
+          }`}
           placeholder="Email address"
         />
       </div>
       <div className="pb-2 relative">
-        {passwordError && (
-          <p className="text-sm text-red dark:text-red-light p-2 rounded-lg -top-1 right-1 absolute">
-            {passwordError}
-          </p>
-        )}
         <input
           name="password"
           type="password"
@@ -71,15 +74,21 @@ const LoginForm = () => {
           required
           value={password}
           onChange={(e) => setPassword(e.target.value)}
-          className="bg-gray-100 w-full text-md px-4 py-3.5  bg-[#FFFFFF] dark:bg-gray  rounded-md outline-green-dark dark:outline-yellow"
+          className={`bg-gray-100 w-full text-md px-4 py-3.5 bg-[#FFFFFF] dark:bg-gray rounded-md outline-green-dark dark:outline-yellow ${
+            passwordError ||
+            (error && "border-t-2 border-red dark:border-red-light")
+          }`}
           placeholder="Password"
         />
       </div>
       <div className="flex pb-6 w-full place-items-center justify-between">
         <div className="flex place-items-center">
-          <div className="text-sm text-green cursor-pointer dark:text-yellow-dark hover:text-green-dark dark:hover:text-yellow hover:underline">
-            Not a member? <Link href="/auth/signup"> Sign up</Link>
-          </div>
+          <Link
+            href="/auth/signup"
+            className="text-sm text-green cursor-pointer dark:text-yellow-dark hover:text-green-dark dark:hover:text-yellow hover:underline"
+          >
+            Not a member? Sign up
+          </Link>
         </div>
         <div className="text-sm">
           <Link
@@ -97,7 +106,7 @@ const LoginForm = () => {
           </div>
         ) : (
           <button
-            onClick={handleSubmit}
+            onMouseDown={handleSubmit}
             className="w-full h-12 text-lg font-semibold  rounded-lg text-white bg-green hover:bg-green-dark dark:text-black dark:bg-yellow-dark dark:hover:bg-yellow ocus:outline-none"
           >
             Log in
