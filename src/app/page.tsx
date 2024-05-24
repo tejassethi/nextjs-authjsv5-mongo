@@ -2,7 +2,7 @@
 import Navbar from "@/components/client/navbar";
 import Link from "next/link";
 import Heading from "@/components/client/heading";
-import { currentUser } from "@/hooks/current-user";
+import { UseCurrentUser } from "@/hooks/use-current-user";
 import { FaUser } from "react-icons/fa";
 
 export default function Home() {
