@@ -161,7 +161,7 @@ export async function getUserWithPassword(email: any) {
 export async function getUserPlanFromStripe(email: any) {
   try {
     await connectToDatabase();
-    const user = await User.findOne({ email: email });
+    const user = await User.findOne({ email: email }).populate("plan");
 
     if (!user) {
       console.error("User not found for email:", email);

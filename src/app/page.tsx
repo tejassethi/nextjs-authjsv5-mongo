@@ -8,7 +8,7 @@ export default async function Home() {
   return (
     <>
       <div className="flex justify-center font-OpenSans dark:text-white pb-10 md:pb-0 select-none relative">
-        <div className="w-full sm:px-10 px-5 xl:px-0 pt-12">
+        <div className="w-full sm:px-10 px-5 xl:px-0 pt-6 md:pt-12">
           <MainForm />
         </div>
       </div>

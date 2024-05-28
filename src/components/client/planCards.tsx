@@ -26,7 +26,7 @@ export default function PlanCards({ tiers, currentPlanId, user }: any) {
     }
   };
 
-  const mostPopularTier = tiers?.reduce(
+  const mostPopularTier = tiers.reduce(
     (prev: any, current: any) =>
       parseFloat(current.price) > parseFloat(prev.price) ? current : prev,
     tiers[0]

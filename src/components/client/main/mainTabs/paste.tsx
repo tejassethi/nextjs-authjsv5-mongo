@@ -1,7 +1,7 @@
 import React from "react";
 
 const Paste = () => {
-  return <>paste</>;
+  return <></>;
 };
 
 export default Paste;

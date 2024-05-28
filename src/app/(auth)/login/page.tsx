@@ -14,7 +14,7 @@ const page = async () => {
       <div className=" flex justify-center font-OpenSans dark:text-white pb-10 md:pb-0 select-none relative">
         <div className="w-full sm:px-10 px-5 xl:px-0">
           <div className="w-full flex justify-center place-items-center">
-            <div className=" max-w-md w-full pt-12">
+            <div className=" max-w-md w-full pt-6 md:pt-12">
               <h3 className="pb-4 text-3xl font-bold text-center text-green dark:text-yellow-dark">
                 Log in
               </h3>
