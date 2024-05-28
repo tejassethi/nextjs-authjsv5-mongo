@@ -1,6 +1,6 @@
 "use server";
 
-import { getUser, getUserWithPassword } from "@/lib/actions/user.actions";
+import { getUser, getUserWithPassword } from "./actions/user.actions";
 
 import { gen } from "n-digit-token";
 import { Resend } from "resend";

@@ -1,6 +1,6 @@
 "use server";
 
-import { signIn } from "@/auth";
+import { signIn } from "../auth";
 import { CredentialsSignin } from "next-auth";
 
 const loginHandler = async (email: string, password: string) => {

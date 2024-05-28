@@ -1,7 +1,8 @@
-import mongoose, { Schema } from "mongoose";
+import mongoose, { Mongoose, Schema } from "mongoose";
 
 const planSchema = new Schema({
   name: { type: String },
+  stripePriceId: { type: String },
   max_account_space: { type: Number },
   max_drops: { type: Number },
   max_lifespan_of_drop: { type: Number },
@@ -20,7 +21,10 @@ const userSchema = new Schema({
     default: new mongoose.Types.ObjectId("6648677b5167ea9cbc4310d0"),
   },
   space_used: { type: Number, default: 0 },
-  drops_made: { type: Number, default: 0 },
+  stripeCustomerId: { type: String },
+  stripeSubscriptionId: { type: String },
+  stripePriceId: { type: String },
+  stripeCurrentPeriodEnd: { type: Date },
   created_at: { type: Date, default: Date.now },
   last_login: { type: Date, default: Date.now },
 });

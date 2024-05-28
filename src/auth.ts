@@ -36,7 +36,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     }),
   ],
   pages: {
-    signIn: "/auth/login",
+    signIn: "/login",
   },
   callbacks: {
     signIn: async ({ user, account }) => {
@@ -52,16 +52,18 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
             if (createdUser.success) {
               const newUser = await getUser(email);
               if (newUser.success) {
-                console.log("New user created:", newUser);
                 user.data = newUser.data;
                 return true;
               }
+            } else {
+              throw new Error("An error occurred. Please try again later.");
             }
           }
           user.data = existingUser.data;
           return true;
         } catch (error) {
           console.log(error);
+          throw new CredentialsSignin({ cause: error });
         }
       }
       return true;
