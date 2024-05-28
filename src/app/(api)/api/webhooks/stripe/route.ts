@@ -66,7 +66,7 @@ export async function POST(request: Request) {
           "Subscription not found from session:",
           session.subscription
         );
-        return { success: false, message: "Subscription not found." };
+        return new Response("Subscription not found.", { status: 404 });
       }
 
       const planID = await Plan.findOne({
@@ -78,7 +78,7 @@ export async function POST(request: Request) {
           "Plan not found for price ID:",
           subscription.items.data[0].price.id
         );
-        return { success: false, message: "Plan not found." };
+        return new Response("Plan not found.", { status: 404 });
       }
 
       console.log(
@@ -95,10 +95,10 @@ export async function POST(request: Request) {
           "No user found with stripeSubscriptionId:",
           subscription.id
         );
-        return { success: false, message: "No matching user found." };
+        return new Response("No matching user found.", { status: 404 });
       }
 
-      const update = await User.findOneAndUpdate(
+      await User.findOneAndUpdate(
         { stripeSubscriptionId: subscription.id },
         {
           stripePriceId: subscription.items.data[0].price.id,
