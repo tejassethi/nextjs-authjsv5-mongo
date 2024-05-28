@@ -6,7 +6,6 @@ import {
   getUserWithPlan,
 } from "../../../lib/actions/user.actions";
 import { auth } from "../../../auth";
-import { toast } from "sonner";
 import PlanCards from "../../../components/client/planCards";
 
 export default async function Plan() {

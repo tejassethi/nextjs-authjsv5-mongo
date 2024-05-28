@@ -246,6 +246,7 @@ export async function resetPassword(email: any, password: any) {
 
 export async function getAllPlans() {
   try {
+    await connectToDatabase();
     const plans = await Plan.find();
     return { success: true, plans: JSON.parse(JSON.stringify(plans)) };
   } catch (error) {
