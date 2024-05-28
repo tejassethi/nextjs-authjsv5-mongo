@@ -216,8 +216,8 @@ const Navbar = () => {
         </div>
       </div>
       <div className="md:pt-24 p-8 w-full flex flex-col justify-center place-items-center">
-        <p className="font-NerkoOne font-normal pt-18 text-5xl lg:text-7xl text-green-dark dark:text-yellow-dark text-center z-10">
-          SHARE ANYTHING WITH WORDS
+        <p className=" font-sans font-bold pt-18 text-4xl lg:text-6xl text-green-dark dark:text-yellow-dark text-center z-10">
+          Share Anything With Words
         </p>
         <p className="text-center text-sm md:text-lg">
           Upload files, text, or links and get unique words for instant and

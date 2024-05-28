@@ -161,19 +161,28 @@ export async function getUserWithPassword(email: any) {
 export async function getUserPlanFromStripe(email: any) {
   try {
     await connectToDatabase();
-    const user = await User.findOne({ email: email }).populate("plan");
+    let user = await User.findOne({ email: email }).populate("plan");
 
     if (!user) {
       console.error("User not found for email:", email);
       return { success: false, message: "User not found." };
     }
 
-    if (!user.stripeCustomerId) {
-      return {
-        success: true,
-        data: JSON.parse(JSON.stringify(user)),
-        message: "no payment",
-      };
+    if (!user.stripeCustomerId || !user.stripeSubscriptionId) {
+      const customer = await findStripeCustomerByEmail(email);
+
+      if (!customer) {
+        return createNonMemberResponse(user);
+      }
+
+      const subscription = await findStripeSubscription(customer.id);
+
+      if (!subscription) {
+        return createNonMemberResponse(user);
+      }
+
+      user = await updateUserSubscription(user, subscription);
+      console.log("Updated User Plan From Stripe", user);
     }
 
     const subscription = await stripe.subscriptions.retrieve(
@@ -181,52 +190,97 @@ export async function getUserPlanFromStripe(email: any) {
     );
 
     if (!subscription) {
-      console.error(
-        "Subscription not found for customerId:",
-        user.stripeCustomerId
-      );
+      console.error("Subscription not found for customerId:");
       return { success: false, message: "Subscription not found." };
     }
 
-    const planID = await Plan.findOne({
-      stripePriceId: subscription.items.data[0].price.id,
-    });
+    const currentTime = new Date().getTime();
+    const subscriptionEnd = new Date(user.stripeCurrentPeriodEnd).getTime();
 
-    if (!planID) {
-      console.error(
-        "Plan not found for price ID:",
-        subscription.items.data[0].price.id
-      );
-      return { success: false, message: "Plan not found." };
+    if (
+      currentTime > subscriptionEnd &&
+      subscription?.items.data[0].plan?.active === false
+    ) {
+      if (user.plan.toString() !== "6648677b5167ea9cbc4310d0") {
+        user = await User.findOneAndUpdate(
+          { email: email },
+          {
+            stripeSubscriptionId: subscription.id,
+            stripePriceId: subscription.items.data[0].price.id,
+            stripeCurrentPeriodEnd: new Date(
+              subscription.current_period_end * 1000
+            ),
+            plan: "6648677b5167ea9cbc4310d0",
+          },
+          { new: true }
+        ).populate("plan");
+      }
+    } else {
+      user = await updateUserSubscription(user, subscription);
     }
 
-    console.log(
-      "Checking for matching User document with stripeSubscriptionId:",
-      subscription.id
-    );
+    console.log("Updated User Plan From Stripe", user);
 
-    const update = await User.findOneAndUpdate(
-      { stripeSubscriptionId: subscription.id },
-      {
-        stripePriceId: subscription.items.data[0].price.id,
-        stripeCurrentPeriodEnd: new Date(
-          subscription.current_period_end * 1000
-        ),
-        plan: planID._id,
-      },
-      { new: true }
-    ).populate("plan");
-
-    console.log("Updated User Plan From Stripe", update);
     return {
       success: true,
-      data: JSON.parse(JSON.stringify(update)),
-      message: "member",
+      data: JSON.parse(JSON.stringify(user)),
+      message: "Member",
     };
   } catch (error) {
     console.error("Error in getUserPlan:", error);
     return { success: false, message: "An error occurred. Please try again." };
   }
+}
+
+async function findStripeCustomerByEmail(email: any) {
+  const customer = await stripe.customers.search({
+    query: `email:'${email}'`,
+    limit: 1,
+  });
+
+  return customer.data[0];
+}
+
+async function findStripeSubscription(customerId: any) {
+  const subscriptions = await stripe.subscriptions.list({
+    customer: customerId,
+    limit: 1,
+  });
+
+  return subscriptions.data[0];
+}
+
+function createNonMemberResponse(user: any) {
+  return {
+    success: true,
+    data: JSON.parse(JSON.stringify(user)),
+    message: "Non Member User",
+  };
+}
+
+async function updateUserSubscription(user: any, subscription: any) {
+  const planID = await Plan.findOne({
+    stripePriceId: subscription.items.data[0].price.id,
+  });
+
+  if (!planID) {
+    console.error(
+      "Plan not found for price ID:",
+      subscription.items.data[0].price.id
+    );
+    throw new Error("Plan not found.");
+  }
+
+  return await User.findOneAndUpdate(
+    { email: user.email },
+    {
+      stripeSubscriptionId: subscription.id,
+      stripePriceId: subscription.items.data[0].price.id,
+      stripeCurrentPeriodEnd: new Date(subscription.current_period_end * 1000),
+      plan: planID._id,
+    },
+    { new: true }
+  ).populate("plan");
 }
 
 export async function resetPassword(email: any, password: any) {
