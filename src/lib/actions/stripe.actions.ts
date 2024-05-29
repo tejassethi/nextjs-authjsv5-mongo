@@ -47,6 +47,49 @@ export async function manageStripeSubscriptionAction(lineItems: LineItem[]) {
   return redirect(session.url as string);
 }
 
+export default async function UpdatePeriodEnded(customerEmail: any) {
+  await connectToDatabase();
+  const user = await User.findOne({ email: customerEmail });
+
+  console.log(user);
+
+  if (!user || !user.stripeSubscriptionId)
+    return { message: "No user subscription" };
+
+  if (
+    user.stripeCurrentPeriodEnd &&
+    new Date() < new Date(user.stripeCurrentPeriodEnd)
+  )
+    return { message: "Subscription not ended" };
+
+  const subscription = await stripe.subscriptions.retrieve(
+    user.stripeSubscriptionId
+  );
+
+  if (subscription.status === "active") {
+    const subscriptionData = {
+      stripeSubscriptionId: subscription.id,
+      stripeCustomerId: subscription.customer,
+      stripeCurrentPeriodEnd: new Date(subscription.current_period_end * 1000),
+      plan: user.plan,
+    };
+    await User.findOneAndUpdate({ email: customerEmail }, subscriptionData);
+    return { message: "Subscription active, updated stripeCurrentPeriodEnd" };
+  } else {
+    await User.findOneAndUpdate(
+      { email: customerEmail },
+      {
+        stripeSubscriptionId: null,
+        stripePriceId: null,
+        plan: "6648677b5167ea9cbc4310d0",
+      }
+    );
+    return { message: "Subscription inactive, updated plan to default." };
+  }
+
+  return;
+}
+
 // export async function getUserSubscriptionPlan() {
 //   const session = await auth();
 //   await connectToDatabase();
