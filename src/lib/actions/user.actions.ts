@@ -96,7 +96,7 @@ export async function getUser(email: any) {
 
     console.log("GET USER: ", user);
 
-    return { success: true, data: user.toObject() };
+    return { success: true, data: JSON.parse(JSON.stringify(user)) };
   } catch (error) {
     let errorMessage = "An error occurred. Please try again.";
     if (["Invalid credentials"].includes((error as Error)?.message)) {
@@ -118,9 +118,9 @@ export async function getUserWithPlan(email: any) {
 
     if (!user) throw new Error("Invalid credentials");
 
-    console.log("GET USER: ", user);
+    console.log("GET USER WITH PLAN: ", user);
 
-    return { success: true, data: user.toObject() };
+    return { success: true, data: JSON.parse(JSON.stringify(user)) };
   } catch (error) {
     let errorMessage = "An error occurred. Please try again.";
     if (["Invalid credentials"].includes((error as Error)?.message)) {
@@ -142,9 +142,9 @@ export async function getUserWithPassword(email: any) {
 
     if (!user) throw new Error("Invalid credentials");
 
-    console.log("GET USER: ", user);
+    console.log("GET USER WITH PASSWORD: ", user);
 
-    return { success: true, data: user.toObject() };
+    return { success: true, data: JSON.parse(JSON.stringify(user)) };
   } catch (error) {
     let errorMessage = "An error occurred. Please try again.";
     if (["Invalid credentials"].includes((error as Error)?.message)) {

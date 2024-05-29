@@ -47,43 +47,43 @@ export async function manageStripeSubscriptionAction(lineItems: LineItem[]) {
   return redirect(session.url as string);
 }
 
-export async function getUserSubscriptionPlan() {
-  const session = await auth();
-  await connectToDatabase();
+// export async function getUserSubscriptionPlan() {
+//   const session = await auth();
+//   await connectToDatabase();
 
-  if (!session || !session.user) {
-    throw new Error("User not found in session.");
-  }
+//   if (!session || !session.user) {
+//     throw new Error("User not found in session.");
+//   }
 
-  const user = await User.findOne({ email: session.user.email });
+//   const user = await User.findOne({ email: session.user.email });
 
-  if (!user) {
-    throw new Error("User not found in database.");
-  }
+//   if (!user) {
+//     throw new Error("User not found in database.");
+//   }
 
-  const isSubscribed =
-    user.stripePriceId &&
-    user.stripeCurrentPeriodEnd &&
-    new Date(user.stripeCurrentPeriodEnd).getTime() > Date.now();
+//   const isSubscribed =
+//     user.stripePriceId &&
+//     user.stripeCurrentPeriodEnd &&
+//     new Date(user.stripeCurrentPeriodEnd).getTime() > Date.now();
 
-  const plan = isSubscribed
-    ? await Plan.findOne({ stripePriceId: user.stripePriceId })
-    : null;
+//   const plan = isSubscribed
+//     ? await Plan.findOne({ stripePriceId: user.stripePriceId })
+//     : null;
 
-  let isCanceled = false;
-  let stripePlan;
-  if (isSubscribed && user.stripeSubscriptionId) {
-    stripePlan = await stripe.subscriptions.retrieve(user.stripeSubscriptionId);
-    isCanceled = stripePlan.cancel_at_period_end;
-  }
+//   let isCanceled = false;
+//   let stripePlan;
+//   if (isSubscribed && user.stripeSubscriptionId) {
+//     stripePlan = await stripe.subscriptions.retrieve(user.stripeSubscriptionId);
+//     isCanceled = stripePlan.cancel_at_period_end;
+//   }
 
-  return {
-    ...plan,
-    stripePlan,
-    stripeSubscriptionId: user.stripeSubscriptionId,
-    stripeCurrentPeriodEnd: user.stripeCurrentPeriodEnd,
-    stripeCustomerId: user.stripeCustomerId,
-    isSubscribed,
-    isCanceled,
-  };
-}
+//   return {
+//     ...plan,
+//     stripePlan,
+//     stripeSubscriptionId: user.stripeSubscriptionId,
+//     stripeCurrentPeriodEnd: user.stripeCurrentPeriodEnd,
+//     stripeCustomerId: user.stripeCustomerId,
+//     isSubscribed,
+//     isCanceled,
+//   };
+// }

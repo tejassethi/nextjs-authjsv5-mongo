@@ -14,11 +14,11 @@ export default async function Plan() {
   const plan = await getAllPlans();
   if (!plan.success) console.log(plan.message);
 
-  const { success, data, message } = await getUserPlanFromStripe(
-    session?.user.email
-  );
+  const { success, data, message } = await getUserWithPlan(session?.user.email);
+
   if (!success) console.log(message);
-  console.log(data, message);
+
+  console.log(data);
 
   return (
     <>
@@ -31,7 +31,7 @@ export default async function Plan() {
               </h3>
               <PlanCards
                 tiers={plan.plans}
-                currentPlanId={data?.plan?._id}
+                currentPlanId={session ? data?.plan?._id : ""}
                 user={session?.user}
               />
             </div>

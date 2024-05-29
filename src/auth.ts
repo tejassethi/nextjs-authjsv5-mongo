@@ -46,7 +46,6 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
 
           const existingUser = await getUser(email);
 
-          console.log(existingUser);
           if (!existingUser.success) {
             const createdUser = await createUserWithGoogle(name, email, id);
             if (createdUser.success) {

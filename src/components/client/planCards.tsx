@@ -11,15 +11,12 @@ export default function PlanCards({ tiers, currentPlanId, user }: any) {
   const router = useRouter();
   const handleSubmit = async (selectedStripePriceId: any) => {
     try {
-      const session = await manageStripeSubscriptionAction([
+      await manageStripeSubscriptionAction([
         {
           price: selectedStripePriceId,
           quantity: 1,
         },
       ]);
-      if (session) {
-        window.location.href = session.url ?? "/plan";
-      }
     } catch (err) {
       console.error((err as Error).message);
       toast.error("Something went wrong, please try again later.");
