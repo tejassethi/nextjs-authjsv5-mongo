@@ -26,9 +26,7 @@ export default async function Plan() {
   console.log(data);
 
   const tiers = plan.plans;
-  const currentPlanId = session?.user
-    ? data?.plan?._id
-    : "6648677b5167ea9cbc4310d0";
+  const currentPlanId = data?.plan?._id || "";
 
   const mostPopularTier = tiers?.reduce(
     (prev: any, current: any) =>
@@ -85,14 +83,14 @@ export default async function Plan() {
                               </p>
                             ) : null}
                           </div>
-                          <p className="mt-4 text-sm leading-6 text-gray-600 h-[100px]">
+                          <p className="mt-4 text-sm leading-6 h-[100px]">
                             {tier.description}
                           </p>
                           <p className="mt-6 flex items-baseline gap-x-1">
-                            <span className="text-4xl font-bold tracking-tight text-gray-900">
+                            <span className="text-4xl font-bold tracking-tight ">
                               {tier.price}
                             </span>
-                            <span className="text-sm font-semibold leading-6 text-gray-600">
+                            <span className="text-sm font-semibold leading-6 ">
                               /month
                             </span>
                           </p>
