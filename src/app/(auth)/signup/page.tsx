@@ -2,7 +2,7 @@
 
 import { auth, signIn } from "../../../auth";
 import SignUpForm from "../../../components/client/auth/signup/signupForm";
-import Navbar from "../../../components/client/navbar";
+import Navbar from "../../../components/navbar";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import React from "react";

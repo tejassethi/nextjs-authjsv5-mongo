@@ -2,25 +2,25 @@ import type { Config } from "tailwindcss";
 
 const config = {
   theme: {
-    colors: {
-      white: "#FAF9FC",
-      yellow: {
-        DEFAULT: "#F5EFE6",
-        dark: "#DDCEB6",
-      },
-      green: {
-        DEFAULT: "#4F6F52",
-        dark: "#1A4D2E",
-      },
-      gray: {
-        light: "#9CA3AF",
-        DEFAULT: "#535353",
-        dark: "#2D2D2D",
-      },
-      black: "#000000",
-      red: { DEFAULT: "#dc2626", light: "#f87171" },
-    },
     extend: {
+      colors: {
+        white: "#FAF9FC",
+        yellow: {
+          DEFAULT: "#F5EFE6",
+          dark: "#DDCEB6",
+        },
+        green: {
+          DEFAULT: "#4F6F52",
+          dark: "#1A4D2E",
+        },
+        gray: {
+          light: "#9CA3AF",
+          DEFAULT: "#535353",
+          dark: "#2D2D2D",
+        },
+        black: "#000000",
+        red: { DEFAULT: "#dc2626", light: "#f87171" },
+      },
       fontFamily: {
         OpenSans: ["Open Sans", "sans-serif"],
         NerkoOne: ["Nerko One"],

@@ -3,7 +3,7 @@ import "./globals.css";
 import { SessionProvider } from "next-auth/react";
 import { Providers } from "./providers";
 import { Toaster } from "sonner";
-import Navbar from "../components/client/navbar";
+import Navbar from "../components/navbar";
 
 export const metadata: Metadata = {
   title: "Create Next App",

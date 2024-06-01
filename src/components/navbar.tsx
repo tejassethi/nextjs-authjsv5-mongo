@@ -2,7 +2,7 @@
 
 import initials from "initials";
 import React, { useEffect, useRef, useState } from "react";
-import ThemeSwitch from "./themeSwitch";
+import ThemeSwitch from "./client/themeSwitch";
 import { CgMenu } from "react-icons/cg";
 import Link from "next/link";
 import { UseCurrentUser } from "@/lib/use-current-user";

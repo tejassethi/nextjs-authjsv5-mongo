@@ -2,7 +2,7 @@
 
 import { auth, signIn } from "../../../auth";
 import ForgotForm from "../../../components/client/auth/forgot/forgotForm";
-import Navbar from "../../../components/client/navbar";
+import Navbar from "../../../components/navbar";
 import { redirect } from "next/navigation";
 import React from "react";
 
