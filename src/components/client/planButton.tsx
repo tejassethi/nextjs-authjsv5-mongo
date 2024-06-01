@@ -7,7 +7,7 @@ import { useRouter } from "next/navigation";
 import React from "react";
 import { toast } from "sonner";
 
-const PlanButton = (currentPlanId: any, tier: any) => {
+const PlanButton = ({ currentPlanId, tier }: any) => {
   const router = useRouter();
   const user = UseCurrentUser();
   const handleSubmit = async (selectedStripePriceId: any) => {
@@ -32,7 +32,7 @@ const PlanButton = (currentPlanId: any, tier: any) => {
         }
       }}
       className={cn(
-        tier?._id !== currentPlanId
+        tier?._id != currentPlanId
           ? "border-2 border-green-dark text-white bg-green dark:border-yellow-dark dark:text-black dark:bg-yellow-dark"
           : `border-2 border-green-dark text-green-dark dark:border-yellow-dark dark:text-yellow-dark ${
               parseFloat(tier?.price) > 0
@@ -42,7 +42,7 @@ const PlanButton = (currentPlanId: any, tier: any) => {
         "mt-6 block w-full rounded-md px-3 py-2 text-center text-sm font-semibold leading-6 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green"
       )}
     >
-      {tier?._id === currentPlanId ? "Your current plan" : "Get started today"}
+      {tier?._id == currentPlanId ? "Your current plan" : "Get started today"}
     </button>
   );
 };

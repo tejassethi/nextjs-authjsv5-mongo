@@ -16,15 +16,19 @@ export default async function Plan() {
   const plan = await getAllPlans();
   if (!plan.success) console.log(plan.message);
 
-  const { success, data, message } = await getUserWithPlan(session?.user.email);
+  let success, data, message;
 
-  if (!success) console.log(message);
+  if (session?.user) {
+    ({ success, data, message } = await getUserWithPlan(session?.user.email));
+    if (!success) console.log(message);
+  }
 
   console.log(data);
 
   const tiers = plan.plans;
-  const currentPlanId = session ? data?.plan?._id : "";
-  const user = session?.user;
+  const currentPlanId = session?.user
+    ? data?.plan?._id
+    : "6648677b5167ea9cbc4310d0";
 
   const mostPopularTier = tiers?.reduce(
     (prev: any, current: any) =>
