@@ -3,7 +3,8 @@ import "./globals.css";
 import { SessionProvider } from "next-auth/react";
 import { Providers } from "./providers";
 import { Toaster } from "sonner";
-import Navbar from "../components/navbar";
+import Header from "../components/header";
+import Navbar from "@/components/navbar";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -18,11 +19,11 @@ export default async function RootLayout({
   return (
     <SessionProvider>
       <html lang="en" suppressHydrationWarning>
-        <body className="bg-yellow dark:bg-gray-dark text-black dark:text-white relative">
+        <body className="bg-gray dark:bg-[#1E1E1E] text-black dark:text-white relative font-GMSans z-50">
           <Toaster />
           <Providers>
             <Navbar />
-            {children}
+            <div className="px-5 pt-24">{children}</div>
           </Providers>
         </body>
       </html>

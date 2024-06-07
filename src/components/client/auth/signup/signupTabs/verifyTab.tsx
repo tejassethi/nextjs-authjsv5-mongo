@@ -93,7 +93,7 @@ const VerifyTab = ({
       </div>
       <div className="w-full flex flex-col pt-4">
         {loading ? (
-          <div className="w-full h-12 text-lg flex justify-center place-items-center font-semibold  rounded-lg text-white bg-green hover:bg-green-dark dark:text-black dark:bg-yellow-dark dark:hover:bg-yellow focus:outline-none">
+          <div className="w-full h-12 text-lg flex justify-center place-items-center font-semibold  rounded-lg text-white bg-black hover:bg-black-dark dark:text-black dark:bg-gray-dark dark:hover:bg-gray focus:outline-none">
             <PropagateLoader color="white" size={15} className="mb-4" />
           </div>
         ) : (
@@ -101,7 +101,7 @@ const VerifyTab = ({
             <button
               disabled={resendLoading}
               onMouseDown={handleCodeCheck}
-              className="w-full h-12 text-lg font-semibold  rounded-lg text-white bg-green hover:bg-green-dark dark:text-black dark:bg-yellow-dark dark:hover:bg-yellow ocus:outline-none"
+              className="w-full h-12 text-lg font-semibold  rounded-lg text-white bg-black hover:bg-black-dark dark:text-black dark:bg-gray-dark dark:hover:bg-gray ocus:outline-none"
             >
               Verify
             </button>
@@ -110,7 +110,7 @@ const VerifyTab = ({
               resendText === "" ? (
                 <button
                   onMouseDown={resendCode}
-                  className="w-full pt-2 select-none h-10 underline text-two hover:text-four text-lg text-black hover:text-green dark:text-white dark:hover:text-yellow-dark flex justify-center place-items-center cursor-pointer"
+                  className="w-full pt-2 select-none h-10 underline text-two hover:text-four text-lg text-black hover:text-black dark:text-white dark:hover:text-gray-dark flex justify-center place-items-center cursor-pointer"
                 >
                   Resend Verification Code
                 </button>

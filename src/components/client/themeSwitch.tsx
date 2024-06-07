@@ -16,7 +16,7 @@ export default function ThemeSwitch() {
       <div>
         <BsCloudMoon
           size={30}
-          className="text-green cursor-pointer dark:text-yellow-dark"
+          className="text-black cursor-pointer dark:text-gray-dark"
         />
       </div>
     );
@@ -26,7 +26,7 @@ export default function ThemeSwitch() {
       <div className="cursor-pointer" onMouseDown={() => setTheme("light")}>
         <BsCloudMoon
           size={30}
-          className="text-green cursor-pointer dark:text-yellow-dark"
+          className="text-black cursor-pointer dark:text-gray-dark"
         />
       </div>
     );
@@ -37,7 +37,7 @@ export default function ThemeSwitch() {
       <div className="cursor-pointer" onMouseDown={() => setTheme("dark")}>
         <BsCloudMoonFill
           size={30}
-          className="text-green cursor-pointer dark:text-yellow-dark"
+          className="text-black cursor-pointer dark:text-gray-dark"
           onMouseDown={() => setTheme("dark")}
         />
       </div>

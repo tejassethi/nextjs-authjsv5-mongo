@@ -41,7 +41,7 @@ const EmailTab = ({ email, setEmail, setCode, setPage }: any) => {
           required
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-          className={`bg-gray-100 w-full text-md px-4 py-3.5 bg-[#FFFFFF] dark:bg-gray rounded-md outline-green-dark dark:outline-yellow ${
+          className={`bg-gray-100 w-full text-md px-4 py-3.5 bg-[#FFFFFF] dark:bg-gray rounded-md outline-black-dark dark:outline-gray ${
             emailError != "" && "border-t-2 border-red dark:border-red-light"
           }`}
           placeholder="Email address"
@@ -51,7 +51,7 @@ const EmailTab = ({ email, setEmail, setCode, setPage }: any) => {
         <div className="flex place-items-center">
           <Link
             href="/login"
-            className="text-sm text-green cursor-pointer dark:text-yellow-dark hover:text-green-dark dark:hover:text-yellow hover:underline"
+            className="text-sm text-black cursor-pointer dark:text-gray-dark hover:text-black-dark dark:hover:text-gray hover:underline"
           >
             Already a member? Log in
           </Link>
@@ -59,7 +59,7 @@ const EmailTab = ({ email, setEmail, setCode, setPage }: any) => {
         <div className="text-sm">
           <Link
             href="/forgot"
-            className="text-green dark:text-yellow-dark hover:text-green-dark dark:hover:text-yellow hover:underline"
+            className="text-black dark:text-gray-dark hover:text-black-dark dark:hover:text-gray hover:underline"
           >
             Forgot your password?
           </Link>
@@ -67,14 +67,14 @@ const EmailTab = ({ email, setEmail, setCode, setPage }: any) => {
       </div>
       <div>
         {loading ? (
-          <div className="w-full h-12 text-lg flex justify-center place-items-center font-semibold  rounded-lg text-white bg-green hover:bg-green-dark dark:text-black dark:bg-yellow-dark dark:hover:bg-yellow focus:outline-none">
+          <div className="w-full h-12 text-lg flex justify-center place-items-center font-semibold  rounded-lg text-white bg-black hover:bg-black-dark dark:text-black dark:bg-gray-dark dark:hover:bg-gray focus:outline-none">
             <PropagateLoader color="white" size={15} className="mb-4" />
           </div>
         ) : (
           <button
             onMouseDown={handleSendEmail}
             type="submit"
-            className="w-full h-12 text-lg font-semibold  rounded-lg text-white bg-green hover:bg-green-dark dark:text-black dark:bg-yellow-dark dark:hover:bg-yellow ocus:outline-none"
+            className="w-full h-12 text-lg font-semibold  rounded-lg text-white bg-black hover:bg-black-dark dark:text-black dark:bg-gray-dark dark:hover:bg-gray ocus:outline-none"
           >
             Continue with email
           </button>

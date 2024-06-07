@@ -5,6 +5,9 @@ import { BiDownload } from "react-icons/bi";
 import prettyBytes from "pretty-bytes";
 import cliTruncate from "cli-truncate";
 import { FaDeleteLeft } from "react-icons/fa6";
+import wordsCount from "words-count";
+import pluralize from "pluralize";
+import JoditEditor from "jodit-react";
 
 import {
   Accordion,
@@ -12,17 +15,38 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "../../../ui/accordion";
-import { useEffect, useState } from "react";
-import Navbar from "../../../navbar";
-import Link from "next/link";
+import { useEffect, useMemo, useState } from "react";
 
 export default function Get() {
   const [accordion, setAccordion] = useState("item-1");
   const [receivedText, setreceivedText] = useState<any>("");
+
+  useEffect(() => {
+    console.log(receivedText);
+  }, [receivedText]);
   const [receivedURL, setreceivedURL] = useState<any>("");
   const [validURL, setValidURL] = useState<any>(null);
   const [validText, setValidText] = useState<any>(null);
   const [error, setError] = useState<any>(null);
+
+  const stripHTML = (html: any) => {
+    let doc = new DOMParser().parseFromString(html, "text/html");
+    return doc.body.textContent || "";
+  };
+
+  const config = useMemo(
+    () => ({
+      readonly: false,
+      placeholder:
+        "The most precious thing that we all have with us is time. - Steve Jobs",
+      askBeforePasteHTML: false,
+      defaultLineHeight: 1.5,
+      statusbar: false,
+      toolbar: false,
+      // theme: "dark",
+    }),
+    []
+  );
 
   const submit = () => {
     if (receivedText == "" && receivedURL == "" && acceptedFiles.length < 1) {
@@ -94,21 +118,21 @@ export default function Get() {
       {" "}
       <div
         {...getRootProps()}
-        className=" flex justify-center font-OpenSans dark:text-white pb-10 md:pb-0 select-none relative"
+        className=" flex justify-center text-white pb-10 md:pb-0 select-none relative"
       >
-        <div className="w-full sm:px-10 xl:px-0">
-          <div className="flex justify-center pt-6">
+        <div className="w-full sm:px-10 xl:px-0 flex justify-center place-items-center">
+          <div className="flex flex-col justify-cente place-items-center pt-6 w-[768px]">
             <Accordion
               value={accordion}
               type="single"
               collapsible
-              className="bg-white dark:bg-gray rounded-lg w-[768px] select-none"
+              className=" bg-neutral-700 rounded-lg w-full select-none"
             >
               <AccordionItem
                 value="item-1"
-                className={`md:px-8 px-4 rounded-t-xl ${
+                className={`md:px-8 px-4 rounded-t-xl transition-all duration-500 ${
                   Object.keys(acceptedFiles).length > 0 &&
-                  "bg-green dark:bg-yellow-dark"
+                  " bg-neutral-400 border-neutral-800"
                 }`}
               >
                 <AccordionTrigger
@@ -116,23 +140,27 @@ export default function Get() {
                     setAccordion(accordion == "item-1" ? "" : "item-1")
                   }
                   className={`font-semibold relative ${
-                    Object.keys(acceptedFiles).length > 0 &&
-                    "text-white dark:text-black"
+                    Object.keys(acceptedFiles).length > 0 && "text-black"
                   }`}
                 >
                   File
                   {fileRejections[0]?.errors[0]?.message.length > 0 ? (
                     <div className="absolute right-10">
-                      <div className="text-red dark:text-red-light">
+                      <div className="text-red-400">
                         {fileRejections[0].errors[0].message}
                       </div>
                     </div>
                   ) : acceptedFiles.length > 0 ? (
                     <div className="absolute right-10 ">
-                      <div className="text-white dark:text-black flex justify-center place-items-center space-x-2">
+                      <div className="text-black flex justify-center place-items-center space-x-2">
                         <div>
                           {" "}
-                          {Object.keys(acceptedFiles).length} Files{" - "}
+                          {pluralize(
+                            "File",
+                            Object.keys(acceptedFiles).length,
+                            true
+                          )}
+                          {" - "}
                           {prettyBytes(
                             acceptedFiles.reduce(
                               (acc, curr) => acc + curr.size,
@@ -141,7 +169,7 @@ export default function Get() {
                           )}
                         </div>
                         <div
-                          className="text-white dark:text-gray"
+                          className="text-neutral-800"
                           onMouseDown={() => {
                             acceptedFiles.length = 0;
                             acceptedFiles.splice(0, acceptedFiles.length);
@@ -159,10 +187,10 @@ export default function Get() {
                 <AccordionContent>
                   <div
                     onMouseDown={open}
-                    className="w-full md:h-60 h-40 rounded-lg bg-yellow dark:bg-gray-dark flex justify-center place-items-center"
+                    className="w-full md:h-60 h-40 rounded-lg bg-neutral-800 flex justify-center place-items-center"
                   >
                     <input {...getInputProps()} />
-                    <div className="flex-col text-green dark:text-yellow-dark md:text-2xl text-lg font-bold flex justify-center place-items-center">
+                    <div className="flex-col text-neutral-500 md:text-2xl text-lg font-bold flex justify-center place-items-center">
                       <BiDownload className="text-[50px] md:text-[70px]" />
                       <div>
                         Drag & Drop
@@ -177,23 +205,25 @@ export default function Get() {
               </AccordionItem>
               <AccordionItem
                 value="item-2"
-                className={`md:px-8 px-4 ${
-                  receivedText != "" ? "bg-green dark:bg-yellow-dark" : ""
+                className={`md:px-8 px-4 transition-all duration-500 ${
+                  stripHTML(receivedText) != ""
+                    ? "bg-neutral-400 text-neutral-800 border-neutral-800"
+                    : ""
                 }`}
               >
                 <AccordionTrigger
                   className={`font-semibold relative ${
-                    receivedText != "" && "text-white dark:text-black"
+                    stripHTML(receivedText) != "" && "text-black"
                   }`}
                   onMouseDown={() =>
                     setAccordion(accordion == "item-2" ? "" : "item-2")
                   }
                 >
                   Text
-                  {validText && receivedText != "" ? (
+                  {validText && stripHTML(receivedText) != "" ? (
                     <div className="absolute right-10">
-                      <div className="text-white dark:text-black">
-                        {cliTruncate(receivedText, 25)}
+                      <div className="text-black">
+                        {pluralize("Word", wordsCount(receivedText), true)}
                       </div>
                     </div>
                   ) : (
@@ -201,25 +231,26 @@ export default function Get() {
                   )}
                 </AccordionTrigger>
                 <AccordionContent>
-                  <textarea
+                  <JoditEditor
+                    className="active:outline-none hover:outline-none outline-none transition-none"
+                    config={config}
                     value={receivedText}
-                    maxLength={20971520}
-                    onBlur={() => setValidText(true)}
-                    onChange={(e) => setreceivedText(e.target.value)}
-                    placeholder={`The most precious thing that we all have with us is time. - Steve Jobs`}
-                    className="w-full md:p-4 p-2 md:h-60 h-40 text-black dark:text-white font-OpenSans rounded-lg bg-yellow dark:bg-gray-dark  md:text-lg flex justify-center place-items-center resize-none active:outline-none hover:outline-none outline-none"
-                  ></textarea>
+                    onChange={(e) => {
+                      setreceivedText(e);
+                      stripHTML(receivedText) != "" && setValidText(true);
+                    }}
+                  />
                 </AccordionContent>
               </AccordionItem>
               <AccordionItem
                 value="item-3"
-                className={`md:px-8 px-4 rounded-b-xl border-none ${
-                  validURL && "bg-green dark:bg-yellow-dark"
+                className={`md:px-8 px-4 rounded-b-xl border-none transition-all duration-500 ${
+                  validURL && "bg-neutral-400"
                 }`}
               >
                 <AccordionTrigger
                   className={`font-semibold relative ${
-                    validURL && "text-white dark:text-black"
+                    validURL && "text-black"
                   }`}
                   onMouseDown={() =>
                     setAccordion(accordion == "item-3" ? "" : "item-3")
@@ -228,13 +259,13 @@ export default function Get() {
                   Link
                   {validURL === false ? (
                     <div className="absolute right-10 ">
-                      <div className="text-red dark:text-red-light">
+                      <div className="text-red-400">
                         Please enter a valid url
                       </div>
                     </div>
                   ) : validURL === true && receivedURL.length > 0 ? (
                     <div className="absolute right-10 ">
-                      <div className="text-white dark:text-black">
+                      <div className="text-black">
                         {cliTruncate(receivedURL, 25)}
                       </div>
                     </div>
@@ -249,30 +280,30 @@ export default function Get() {
                     type="url"
                     onChange={(e) => setreceivedURL(e.target.value)}
                     placeholder="https://www.pastewords.com"
-                    className="w-full md:p-4 p-2 md:h-15 h-10 text-black dark:text-white font-OpenSans rounded-lg bg-yellow dark:bg-gray-dark  md:text-lg flex justify-center place-items-center resize-none active:outline-none hover:outline-none outline-none"
+                    className="w-full md:p-4 p-2 md:h-15 h-10 text-white rounded-lg bg-neutral-800 placeholder:text-[#6F6F6F]  md:text-lg flex justify-center place-items-center resize-none active:outline-none hover:outline-none outline-none"
                   ></input>
                 </AccordionContent>
               </AccordionItem>
             </Accordion>
-          </div>
-          <div
-            className="flex pt-6 w-full justify-center place-items-center"
-            onMouseDown={submit}
-          >
-            <div className="bg-green dark:bg-yellow-dark dark:text-black  text-white font-medium md:w-80 w-full h-10 flex justify-center place-items-center rounded-lg md:text-xl text-lg  cursor-pointer">
-              GET WORDS
-              <span>
-                <FaAngleRight size={25} color="text-white" className="pl-3" />
-              </span>
+            <div
+              className="flex pt-6 w-full justify-end place-items-center"
+              onMouseDown={submit}
+            >
+              <div className="bg-zinc-300 hover:bg-neutral-400 duration-100 transition font-medium text-black py-1 px-4 flex justify-center place-items-center rounded-lg md:text-xl text-lg  cursor-pointer">
+                Get Words
+                <span>
+                  <FaAngleRight size={25} color="text-white" className="pl-3" />
+                </span>
+              </div>
             </div>
+            {error ? (
+              <div className=" font-semibold w-full flex justify-end pt-4 text-red-400">
+                {error}
+              </div>
+            ) : (
+              <></>
+            )}
           </div>
-          {error ? (
-            <div className=" font-semibold w-full flex justify-center pt-4 text-red dark:text-red-light">
-              {error}
-            </div>
-          ) : (
-            <></>
-          )}
         </div>
       </div>
     </>

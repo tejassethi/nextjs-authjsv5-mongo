@@ -81,7 +81,7 @@ const CreateTab = ({
           name="email"
           value={email}
           disabled
-          className="bg-gray-100 w-full text-md px-4 py-3.5 bg-[#FFFFFF] dark:bg-gray rounded-md outline-green-dark dark:outline-yellow"
+          className="bg-gray-100 w-full text-md px-4 py-3.5 bg-[#FFFFFF] dark:bg-gray rounded-md outline-black-dark dark:outline-gray"
           placeholder="Email address"
         />
       </div>
@@ -93,7 +93,7 @@ const CreateTab = ({
           value={name}
           onChange={(e) => setName(e.target.value)}
           placeholder="Name"
-          className={`bg-gray-100 w-full text-md px-4 py-3.5 bg-[#FFFFFF] dark:bg-gray rounded-md outline-green-dark dark:outline-yellow ${
+          className={`bg-gray-100 w-full text-md px-4 py-3.5 bg-[#FFFFFF] dark:bg-gray rounded-md outline-black-dark dark:outline-gray ${
             nameError && "border-t-2 border-red dark:border-red-light"
           }`}
         ></input>
@@ -106,7 +106,7 @@ const CreateTab = ({
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           placeholder="Password"
-          className={`bg-gray-100 w-full text-md px-4 py-3.5 bg-[#FFFFFF] dark:bg-gray rounded-md outline-green-dark dark:outline-yellow ${
+          className={`bg-gray-100 w-full text-md px-4 py-3.5 bg-[#FFFFFF] dark:bg-gray rounded-md outline-black-dark dark:outline-gray ${
             passwordError && "border-t-2 border-red dark:border-red-light"
           }`}
         ></input>
@@ -119,7 +119,7 @@ const CreateTab = ({
           value={confirmPassword}
           onChange={(e) => setConfirmPassword(e.target.value)}
           placeholder="Confirm Password"
-          className={`bg-gray-100 w-full text-md px-4 py-3.5 bg-[#FFFFFF] dark:bg-gray rounded-md outline-green-dark dark:outline-yellow ${
+          className={`bg-gray-100 w-full text-md px-4 py-3.5 bg-[#FFFFFF] dark:bg-gray rounded-md outline-black-dark dark:outline-gray ${
             confirmPasswordError &&
             "border-t-2 border-red dark:border-red-light"
           }`}
@@ -127,13 +127,13 @@ const CreateTab = ({
       </div>
       <div className="w-full flex flex-col">
         {loading ? (
-          <div className="w-full h-12 text-lg flex justify-center place-items-center font-semibold  rounded-lg text-white bg-green hover:bg-green-dark dark:text-black dark:bg-yellow-dark dark:hover:bg-yellow focus:outline-none">
+          <div className="w-full h-12 text-lg flex justify-center place-items-center font-semibold  rounded-lg text-white bg-black hover:bg-black-dark dark:text-black dark:bg-gray-dark dark:hover:bg-gray focus:outline-none">
             <PropagateLoader color="white" size={15} className="mb-4" />
           </div>
         ) : (
           <button
             onMouseDown={handleCreateUser}
-            className="w-full h-12 text-lg font-semibold  rounded-lg text-white bg-green hover:bg-green-dark dark:text-black dark:bg-yellow-dark dark:hover:bg-yellow ocus:outline-none"
+            className="w-full h-12 text-lg font-semibold  rounded-lg text-white bg-black hover:bg-black-dark dark:text-black dark:bg-gray-dark dark:hover:bg-gray ocus:outline-none"
           >
             Create Account
           </button>

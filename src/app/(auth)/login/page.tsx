@@ -15,7 +15,7 @@ const page = async () => {
         <div className="w-full sm:px-10 px-5 xl:px-0">
           <div className="w-full flex justify-center place-items-center">
             <div className=" max-w-md w-full pt-6 md:pt-12">
-              <h3 className="pb-4 text-3xl font-bold text-center text-green dark:text-yellow-dark">
+              <h3 className="pb-4 text-3xl font-bold text-center text-black dark:text-gray-dark">
                 Log in
               </h3>
               <form
@@ -96,11 +96,11 @@ const page = async () => {
                 </div>
               </form>
               <div className="flex h-16 justify-between space-x-5 place-items-center">
-                <div className="w-full bg-green-dark dark:bg-yellow-dark h-[1px]"></div>
-                <p className="my-10 text-sm text-gray-400 text-center font-semibold text-green-dark dark:text-yellow-dark">
+                <div className="w-full bg-black-dark dark:bg-gray-dark h-[1px]"></div>
+                <p className="my-10 text-sm text-gray-400 text-center font-semibold text-black-dark dark:text-gray-dark">
                   or
                 </p>
-                <div className="w-full bg-green-dark dark:bg-yellow-dark h-[1px]"></div>
+                <div className="w-full bg-black-dark dark:bg-gray-dark h-[1px]"></div>
               </div>
               <LoginForm />
             </div>

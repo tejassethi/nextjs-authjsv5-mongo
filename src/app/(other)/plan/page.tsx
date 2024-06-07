@@ -42,8 +42,8 @@ export default async function Plan() {
       <div className="flex justify-center font-OpenSans dark:text-white pb-10 md:pb-0 select-none relative">
         <div className="w-full sm:px-10 px-5 xl:px-0">
           <div className="w-full flex justify-center place-items-center">
-            <div className="w-full pt-6 md:pt-12">
-              <h3 className=" text-3xl font-bold text-center text-green dark:text-yellow-dark">
+            <div className="w-full">
+              <h3 className=" text-3xl font-bold text-center text-black dark:text-gray-dark">
                 Pricing
               </h3>
               <div className="w-full flex justify-center pb-10">
@@ -62,7 +62,7 @@ export default async function Plan() {
                           key={tier.name}
                           className={cn(
                             tier === mostPopularTier ? "border-4" : "border-2",
-                            "rounded-3xl p-10 min-w-[315px] max-w-[380px] border-green dark:border-gray"
+                            "rounded-3xl p-10 min-w-[315px] max-w-[380px] border-black dark:border-gray"
                           )}
                         >
                           <div className="flex items-center justify-between gap-x-4">
@@ -70,15 +70,15 @@ export default async function Plan() {
                               id={tier.id}
                               className={cn(
                                 tier.mostPopular
-                                  ? "text-green-dark dark:text-yellow-dark"
-                                  : "text-green-dark dark:text-yellow-dark",
+                                  ? "text-black-dark dark:text-gray-dark"
+                                  : "text-black-dark dark:text-gray-dark",
                                 "text-xl font-bold leading-8"
                               )}
                             >
                               {tier.name} Plan
                             </h3>
                             {tier === mostPopularTier ? (
-                              <p className="rounded-full bg-green dark:bg-yellow-dark text-white dark:text-black px-2.5 py-1 text-xs font-semibold leading-5">
+                              <p className="rounded-full bg-black dark:bg-gray-dark text-white dark:text-black px-2.5 py-1 text-xs font-semibold leading-5">
                                 Most popular
                               </p>
                             ) : null}
@@ -112,7 +112,7 @@ export default async function Plan() {
                                   {feature.split(" / ")[0]}
                                 </span>
                                 {feature.split(" / ")[1] && (
-                                  <span className="text-green-dark dark:text-yellow-dark">
+                                  <span className="text-black-dark dark:text-gray-dark">
                                     {" / "}
                                     {feature.split(" / ")[1]}
                                   </span>
